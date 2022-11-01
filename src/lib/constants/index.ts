@@ -1,5 +1,27 @@
 export const MAX_COLS = 50;
 export const MAX_ROWS = 40;
+export const START_INIT = {
+  row: 1,
+  col: 1,
+  isEnd: false,
+  isWall: false,
+  isPath: false,
+  distance: 0,
+  isStart: false,
+  isTraversed: false,
+  parent: null,
+};
+export const END_INIT = {
+  row: MAX_ROWS - 2,
+  col: MAX_COLS - 2,
+  isEnd: false,
+  isWall: false,
+  isPath: false,
+  distance: 0,
+  isStart: false,
+  isTraversed: false,
+  parent: null,
+};
 
 export const SLEEP_TIME_SECS = 8;
 

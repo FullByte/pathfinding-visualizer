@@ -7,7 +7,7 @@ import {
   SLEEP_TIME_SECS,
   STYLE_VISITED,
 } from '../constants';
-import { GridType, NodeType } from '../types';
+import { GeneralNode, GridType, NodeType } from '../types';
 
 // Function to check if node is the start or end node
 function checkIfStartOrEndNode(startNode: NodeType, endNode: NodeType, node: NodeType) {
@@ -18,7 +18,8 @@ function checkIfStartOrEndNode(startNode: NodeType, endNode: NodeType, node: Nod
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Function to check if two nodes are the same
-export const isEqual = (a: NodeType, b: NodeType) => a.row === b.row && a.col === b.col;
+export const isEqual = (a: GeneralNode, b: GeneralNode) =>
+  a.row === b.row && a.col === b.col;
 
 // Function to generate a random integer
 export const getRandInt = (min: number, max: number) => {
@@ -95,3 +96,37 @@ export const animatePath = (
     }
   }, 30 * visitedNodes.length);
 };
+
+// Function to create a grid
+export const createGrid = (startNode: NodeType, endNode: NodeType) => {
+  const grid: GridType = [];
+  for (let row = 0; row < MAX_ROWS; row += 1) {
+    grid.push(createRow(row, startNode, endNode));
+  }
+  return grid;
+};
+
+const createRow = (row: number, startNode: NodeType, endNode: NodeType) => {
+  const currentRow = [];
+  for (let col = 0; col < MAX_COLS; col += 1) {
+    currentRow.push(createNode(row, col, startNode, endNode));
+  }
+  return currentRow;
+};
+
+const createNode = (
+  row: number,
+  col: number,
+  startNode: GeneralNode,
+  endNode: GeneralNode
+) => ({
+  row,
+  col,
+  isEnd: isEqual({ row, col }, endNode),
+  isWall: false,
+  isPath: false,
+  distance: Infinity,
+  isStart: isEqual({ row, col }, startNode),
+  isTraversed: false,
+  parent: null,
+});

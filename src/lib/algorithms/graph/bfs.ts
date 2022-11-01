@@ -1,6 +1,6 @@
 import { isEqual } from '../../helpers';
-import { MAX_ROWS, MAX_COLS } from '../../constants';
 import { GridType, NodeType } from '../../types';
+import { MAX_ROWS, MAX_COLS } from '../../constants';
 
 export const bfs = (grid: GridType, startNode: NodeType, endNode: NodeType) => {
   const visitedNodes: NodeType[] = [];
