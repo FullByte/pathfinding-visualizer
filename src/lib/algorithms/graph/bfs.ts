@@ -1,16 +1,16 @@
 import { isEqual } from '../../helpers';
 import { MAX_ROWS, MAX_COLS } from '../../constants';
-import { Grid, Node } from '../../types';
+import { GridType, NodeType } from '../../types';
 
-export const bfs = (grid: Grid, startNode: Node, endNode: Node) => {
-  const visitedNodes: Node[] = [];
+export const bfs = (grid: GridType, startNode: NodeType, endNode: NodeType) => {
+  const visitedNodes: NodeType[] = [];
   const base = grid[startNode.row][startNode.col];
   base.distance = 0;
   base.isTraversed = true;
   const unTraversed = [base];
 
   while (unTraversed.length) {
-    const node = unTraversed.shift() as Node;
+    const node = unTraversed.shift() as NodeType;
     // eslint-disable-next-line no-continue
     if (node.isWall) continue;
     if (node.distance === Infinity) break;
@@ -47,16 +47,16 @@ export const bfs = (grid: Grid, startNode: Node, endNode: Node) => {
 //   return false
 // }
 
-const isInQueue = (node: Node, queue: Node[]) => {
+const isInQueue = (node: NodeType, queue: NodeType[]) => {
   for (let i = 0; i < queue.length; i += 1) {
     if (isEqual(node, queue[i])) return true;
   }
   return false;
 };
 
-const getUnTraversedNeighbours = (grid: Grid, node: Node) => {
+const getUnTraversedNeighbours = (grid: GridType, node: NodeType) => {
   const { row, col } = node;
-  const neighbours: Node[] = [];
+  const neighbours: NodeType[] = [];
   if (row > 0) neighbours.push(grid[row - 1][col]);
   if (col > 0) neighbours.push(grid[row][col - 1]);
   if (row < MAX_ROWS - 1) neighbours.push(grid[row + 1][col]);

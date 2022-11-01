@@ -7,10 +7,10 @@ import {
   SLEEP_TIME_SECS,
   STYLE_VISITED,
 } from '../constants';
-import { Grid, Node } from '../types';
+import { GridType, NodeType } from '../types';
 
 // Function to check if node is the start or end node
-function checkIfStartOrEndNode(startNode: Node, endNode: Node, node: Node) {
+function checkIfStartOrEndNode(startNode: NodeType, endNode: NodeType, node: NodeType) {
   return !isEqual(node, startNode) && !isEqual(node, endNode);
 }
 
@@ -18,7 +18,7 @@ function checkIfStartOrEndNode(startNode: Node, endNode: Node, node: Node) {
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Function to check if two nodes are the same
-export const isEqual = (a: Node, b: Node) => a.row === b.row && a.col === b.col;
+export const isEqual = (a: NodeType, b: NodeType) => a.row === b.row && a.col === b.col;
 
 // Function to generate a random integer
 export const getRandInt = (min: number, max: number) => {
@@ -29,9 +29,9 @@ export const getRandInt = (min: number, max: number) => {
 
 // Function that constructs a border
 export async function constructBorder(
-  grid: Grid,
-  startNode: Node,
-  endNode: Node,
+  grid: GridType,
+  startNode: NodeType,
+  endNode: NodeType,
   isDark: boolean
 ) {
   const shape = [
@@ -66,10 +66,10 @@ export async function constructBorder(
 
 // Function to animate the path from start to end node
 export const animatePath = (
-  visitedNodes: Node[],
-  path: Node[],
-  startNode: Node,
-  endNode: Node
+  visitedNodes: NodeType[],
+  path: NodeType[],
+  startNode: NodeType,
+  endNode: NodeType
 ) => {
   for (let i = 0; i < visitedNodes.length; i += 1) {
     setTimeout(() => {

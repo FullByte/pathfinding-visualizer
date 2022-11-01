@@ -1,4 +1,4 @@
-export type Node = {
+export type NodeType = {
   row: number;
   col: number;
   isEnd: boolean;
@@ -10,4 +10,4 @@ export type Node = {
   parent: Node | any;
 };
 
-export type Grid = Node[][];
+export type GridType = NodeType[][];
