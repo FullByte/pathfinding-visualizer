@@ -4,6 +4,7 @@ import { Algorithm } from '../lib/types';
 import { createGrid } from '../lib/helpers';
 import { END_INIT, MAX_ROWS, START_INIT } from '../lib/constants';
 import { Nav } from '../components/nav';
+import { Grid } from '../components/grid';
 
 export default function Home() {
   // const themePreference =
@@ -29,7 +30,7 @@ export default function Home() {
             isGraphVisualizedState={[isGraphVisualized, setIsGraphVisualized]}
             isDarkState={[darkMode, setDarkMode]}
           />
-          {/* <div className={`px-40 min-h-[${MAX_ROWS * 20}px]`}>
+          <div className={`px-40 min-h-[${MAX_ROWS * 20}px]`}>
             <Grid
               startNodeState={[startNode, setStartNode]}
               endNodeState={[endNode, setEndNode]}
@@ -38,7 +39,7 @@ export default function Home() {
               isGraphVisualized={isGraphVisualized}
               isDark={darkMode}
             />
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

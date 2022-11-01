@@ -26,3 +26,10 @@ export enum Algorithm {
   BFS = 'BFS',
   DFS = 'DFS',
 }
+
+export enum Generate {
+  END = 'END',
+  WALL = 'WALL',
+  START = 'START',
+  UNTRAVERSED = 'UNTRAVERSED',
+}
