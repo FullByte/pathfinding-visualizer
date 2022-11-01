@@ -6,8 +6,8 @@ export type Node = {
   isPath: boolean;
   distance: number;
   isStart: boolean;
-  isVisited: boolean;
-  parent: boolean | null;
+  isTraversed: boolean;
+  parent: Node | any;
 };
 
 export type Grid = Node[][];
