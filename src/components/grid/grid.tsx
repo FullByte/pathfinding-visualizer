@@ -142,7 +142,9 @@ export function Grid(props: Props) {
 
   return (
     <div
-      className={`flex flex-col border-l border-b border-sky-200 w-[${MAX_COLS * 20}px]`}
+      className={`flex mt-[40px] flex-col border-l border-b border-sky-200 lg:w-[${
+        MAX_COLS * 20
+      }px] w-[${MAX_COLS * 10}px]`}
     >
       {grid.map((r, rowIdx) => (
         <div key={rowIdx} className="flex">

@@ -27,7 +27,8 @@ export const END_INIT = {
 export const SLEEP_TIME = 8;
 export const EXTENDED_SLEEP_TIME = 30;
 
-export const STYLE_UNTRAVERSED = 'w-[20px] h-[20px] border-t border-r border-sky-200';
+export const STYLE_UNTRAVERSED =
+  'lg:w-[20px] md:w-[15px] w-[10px] lg:h-[20px] md:h-[15px] h-[10px] border-t border-r border-sky-200';
 export const STYLE_TRAVERSED = STYLE_UNTRAVERSED + ' bg-cyan-400';
 export const STYLE_START = STYLE_UNTRAVERSED + ' bg-emerald-400';
 export const STYLE_END = STYLE_UNTRAVERSED + ' bg-rose-400';
