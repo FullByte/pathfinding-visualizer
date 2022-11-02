@@ -92,9 +92,9 @@ export const animatePath = (
             `${node.row}-${node.col}`
           )!.className = `${STYLE_VISITED} animate-path`;
         }
-      });
+      }, 30 * i);
     }
-  }, 30 * visitedNodes.length);
+  }, 8 * visitedNodes.length);
 };
 
 // Function to create a grid
