@@ -5,8 +5,8 @@ import {
   STYLE_END,
   STYLE_WALL_LIGHT,
   STYLE_WALL_DARK,
-  STYLE_UNVISITED,
-  STYLE_VISITED,
+  STYLE_UNTRAVERSED,
+  STYLE_TRAVERSED,
   STYLE_PATH,
 } from '../../lib/constants';
 
@@ -51,8 +51,8 @@ export function Tile(props: Props) {
     : isPath
     ? STYLE_PATH
     : isTraversed
-    ? STYLE_VISITED
-    : STYLE_UNVISITED;
+    ? STYLE_TRAVERSED
+    : STYLE_UNTRAVERSED;
 
   return (
     <div

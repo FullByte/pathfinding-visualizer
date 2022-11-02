@@ -8,7 +8,7 @@ export type TileType = {
   distance: number;
   isStart: boolean;
   isTraversed: boolean;
-  parent: Node | any;
+  parent: TileType | any;
 };
 
 export type GridType = TileType[][];

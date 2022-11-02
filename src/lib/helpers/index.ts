@@ -4,9 +4,10 @@ import {
   MAX_COLS,
   STYLE_WALL_DARK,
   STYLE_WALL_LIGHT,
-  SLEEP_TIME_SECS,
-  STYLE_VISITED,
+  SLEEP_TIME,
+  STYLE_TRAVERSED,
   STYLE_PATH,
+  EXTENDED_SLEEP_TIME,
 } from '../constants';
 import { GridType, TileType } from '../types';
 
@@ -55,7 +56,7 @@ export async function constructBorder(
           isDark ? STYLE_WALL_LIGHT : STYLE_WALL_DARK
         } animate-wall`;
         // eslint-disable-next-line no-await-in-loop
-        await sleep(8);
+        await sleep(SLEEP_TIME);
       }
       row += shape[i].row;
       col += shape[i].col;
@@ -67,20 +68,20 @@ export async function constructBorder(
 
 // Function to animate the path from start to end tile
 export const animatePath = (
-  visitedTiles: TileType[],
+  traversedTiles: TileType[],
   path: TileType[],
   startTile: TileType,
   endTile: TileType
 ) => {
-  for (let i = 0; i < visitedTiles.length; i += 1) {
+  for (let i = 0; i < traversedTiles.length; i += 1) {
     setTimeout(() => {
-      const tile = visitedTiles[i];
+      const tile = traversedTiles[i];
       if (checkIfStartOrEndTile(startTile, endTile, tile)) {
         document.getElementById(
           `${tile.row}-${tile.col}`
-        )!.className = `${STYLE_VISITED} animate-visited`;
+        )!.className = `${STYLE_TRAVERSED} animate-traversed`;
       }
-    }, 8 * i);
+    }, SLEEP_TIME * i);
   }
 
   setTimeout(() => {
@@ -92,9 +93,9 @@ export const animatePath = (
             `${tile.row}-${tile.col}`
           )!.className = `${STYLE_PATH} animate-path`;
         }
-      }, 30 * i);
+      }, EXTENDED_SLEEP_TIME * i);
     }
-  }, 8 * visitedTiles.length);
+  }, SLEEP_TIME * traversedTiles.length);
 };
 
 // Function to create a grid

@@ -10,7 +10,7 @@ export const createNewGrid = (
 ) => {
   const newGrid = grid.slice();
 
-  const newNode = {
+  const newTile = {
     ...newGrid[row][col],
     isStart: false,
     isEnd: false,
@@ -20,20 +20,20 @@ export const createNewGrid = (
   };
 
   if (generate === Generate.WALL) {
-    newNode.isWall = !newGrid[row][col].isWall;
+    newTile.isWall = !newGrid[row][col].isWall;
   } else if (generate === Generate.START) {
     if (isGraphVisualized) {
       refreshGrid(newGrid);
     }
-    newNode.isStart = true;
+    newTile.isStart = true;
   } else if (generate === Generate.END) {
     if (isGraphVisualized) {
       refreshGrid(newGrid);
     }
-    newNode.isEnd = true;
+    newTile.isEnd = true;
   } else if (generate === Generate.UNTRAVERSED) {
-    newNode.isTraversed = false;
+    newTile.isTraversed = false;
   }
-  newGrid[row][col] = newNode;
+  newGrid[row][col] = newTile;
   return newGrid;
 };

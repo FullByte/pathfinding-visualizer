@@ -14,7 +14,7 @@ content: ['./src/**/*.{js,ts,jsx,tsx}'],
           "80%": { transform: "rotate(25deg)" },
           "100%": { transform: "rotate(-5deg)" },
         },
-        visited: {
+        traversed: {
           "0%": {
             transform: "scale(0.3)",
             backgroundColor: "rgba(147, 51, 234, 0.75)",
@@ -65,7 +65,7 @@ content: ['./src/**/*.{js,ts,jsx,tsx}'],
       animation: {
         toggleOff: "toggleOff 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
         toggleOn: "toggleOn 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-        visited: "visited 1.5s cubic-bezier(0, 0, 0.2, 1)",
+        traversed: "traversed 1.5s cubic-bezier(0, 0, 0.2, 1)",
         path: "path 1.5s cubic-bezier(0, 0, 0.2, 1)",
         wall: "wall 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       },

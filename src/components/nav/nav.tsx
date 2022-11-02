@@ -1,7 +1,7 @@
 import React from 'react';
-import { SLEEP_TIME_SECS } from '../../lib/constants';
 import { animatePath } from '../../lib/helpers';
 import { Algorithm, TileType } from '../../lib/types';
+import { SLEEP_TIME, EXTENDED_SLEEP_TIME } from '../../lib/constants';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -37,14 +37,19 @@ export function Nav(props: Props) {
       refreshGrid(grid);
       renderRefreshedGrid(grid, startTile, endTile);
     }
-    const { visitedNodes, path } = runGraphAlgorithm(algorithm, grid, startTile, endTile);
-    animatePath(visitedNodes, path, startTile, endTile);
+    const { traversedTiles, path } = runGraphAlgorithm(
+      algorithm,
+      grid,
+      startTile,
+      endTile
+    );
+    animatePath(traversedTiles, path, startTile, endTile);
 
     setTimeout(() => {
       const newGrid = grid.slice();
       setGrid(newGrid);
       setIsGraphVisualized(true);
-    }, SLEEP_TIME_SECS * (visitedNodes.length + SLEEP_TIME_SECS * 2) + 30 * (path.length + 60));
+    }, SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60));
   };
 
   return (

@@ -55,8 +55,8 @@ export function Grid(props: Props) {
         const newGrid = createNewGrid(grid, row, col, generate, isGraphVisualized);
 
         if (generate === Generate.START) {
-          // TODO change to be full node
-          const newStateNode = {
+          // TODO change to be full tile
+          const newStateTile = {
             row,
             col,
             isEnd: false,
@@ -67,9 +67,9 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setStartTile(newStateNode);
+          setStartTile(newStateTile);
         } else if (generate === Generate.END) {
-          const newEndNode = {
+          const newEndTile = {
             row,
             col,
             isEnd: true,
@@ -80,7 +80,7 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setEndTile(newEndNode);
+          setEndTile(newEndTile);
         }
         setGrid(newGrid);
       }
@@ -94,7 +94,7 @@ export function Grid(props: Props) {
       const newGrid = createNewGrid(grid, row, col, generate, isGraphVisualized);
       if (isGraphVisualized) {
         if (generate === Generate.START) {
-          const newStartNode = {
+          const newStartTile = {
             row,
             col,
             isEnd: false,
@@ -105,10 +105,10 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setStartTile(newStartNode);
-          runGraphAlgorithm(algorithm, newGrid, newStartNode, endTile);
+          setStartTile(newStartTile);
+          runGraphAlgorithm(algorithm, newGrid, newStartTile, endTile);
         } else if (generate === Generate.END) {
-          const newEndNode = {
+          const newEndTile = {
             row,
             col,
             isEnd: true,
@@ -119,8 +119,8 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setEndTile(newEndNode);
-          runGraphAlgorithm(algorithm, newGrid, startTile, newEndNode);
+          setEndTile(newEndTile);
+          runGraphAlgorithm(algorithm, newGrid, startTile, newEndTile);
         }
       }
       setGrid(newGrid);
@@ -146,11 +146,11 @@ export function Grid(props: Props) {
     >
       {grid.map((r, rowIdx) => (
         <div key={rowIdx} className="flex">
-          {r.map((node, nodeIdx) => {
-            const { row, col, isStart, isEnd, isTraversed, isWall, isPath } = node;
+          {r.map((tile, tileIdx) => {
+            const { row, col, isStart, isEnd, isTraversed, isWall, isPath } = tile;
             return (
               <Tile
-                key={nodeIdx}
+                key={tileIdx}
                 row={row}
                 col={col}
                 isStart={isStart}

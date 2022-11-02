@@ -1,51 +1,52 @@
 import { isEqual } from '../../lib/helpers';
-import { Algorithm, NodeType, GridType } from '../../lib/types';
-import { MAX_ROWS, MAX_COLS, STYLE_UNVISITED } from '../../lib/constants';
 import { bfs } from '../../lib/algorithms/graph';
+import { Algorithm, TileType, GridType } from '../../lib/types';
+import { MAX_ROWS, MAX_COLS, STYLE_UNTRAVERSED } from '../../lib/constants';
 
 export const runGraphAlgorithm = (
   algorithm: Algorithm,
   grid: GridType,
-  startNode: NodeType,
-  endNode: NodeType
+  startTile: TileType,
+  endTile: TileType
 ) => {
   switch (algorithm) {
     // case Algorithm.DIJKSTRA:
-    //   return dijkstra(grid, startNode, endNode);
+    //   return dijkstra(grid, startTile, endTile);
     // case Algorithm.ASTAR:
-    //   return aStar(grid, startNode, endNode);
+    //   return aStar(grid, startTile, endTile);
     case Algorithm.BFS:
-      return bfs(grid, startNode, endNode);
+      return bfs(grid, startTile, endTile);
     // case Algorithm.DFS:
-    //   return dfs(grid, startNode, endNode);
+    //   return dfs(grid, startTile, endTile);
     default:
-      return bfs(grid, startNode, endNode);
+      return bfs(grid, startTile, endTile);
   }
 };
 
 export const refreshGrid = (grid: GridType) => {
   for (let row = 0; row < MAX_ROWS; row += 1) {
     for (let col = 0; col < MAX_COLS; col += 1) {
-      const node = grid[row][col];
-      node.distance = Infinity;
-      node.isTraversed = false;
-      node.isPath = false;
-      node.parent = null;
+      const tile = grid[row][col];
+      tile.distance = Infinity;
+      tile.isTraversed = false;
+      tile.isPath = false;
+      tile.parent = null;
     }
   }
 };
 
 export const renderRefreshedGrid = (
   grid: GridType,
-  startNode: NodeType,
-  endNode: NodeType
+  startTile: TileType,
+  endTile: TileType
 ) => {
   for (let row = 0; row < MAX_ROWS; row += 1) {
     for (let col = 0; col < MAX_COLS; col += 1) {
-      const node = grid[row][col];
-      if (!node.isWall) {
-        if (!isEqual(startNode, node) && !isEqual(endNode, node)) {
-          document.getElementById(`${node.row}-${node.col}`)!.className = STYLE_UNVISITED;
+      const tile = grid[row][col];
+      if (!tile.isWall) {
+        if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
+          document.getElementById(`${tile.row}-${tile.col}`)!.className =
+            STYLE_UNTRAVERSED;
         }
       }
     }
@@ -55,26 +56,26 @@ export const renderRefreshedGrid = (
 export const cleanGrid = (grid: GridType) => {
   for (let row = 0; row < MAX_ROWS; row += 1) {
     for (let col = 0; col < MAX_COLS; col += 1) {
-      const node = grid[row][col];
-      node.distance = Infinity;
-      node.isTraversed = false;
-      node.isPath = false;
-      node.parent = null;
-      node.isWall = false;
+      const tile = grid[row][col];
+      tile.distance = Infinity;
+      tile.isTraversed = false;
+      tile.isPath = false;
+      tile.parent = null;
+      tile.isWall = false;
     }
   }
 };
 
 export const renderCleanGrid = (
   grid: GridType,
-  startNode: NodeType,
-  endNode: NodeType
+  startTile: TileType,
+  endTile: TileType
 ) => {
   for (let row = 0; row < MAX_ROWS; row += 1) {
     for (let col = 0; col < MAX_COLS; col += 1) {
-      const node = grid[row][col];
-      if (!isEqual(startNode, node) && !isEqual(endNode, node)) {
-        document.getElementById(`${node.row}-${node.col}`)!.className = STYLE_UNVISITED;
+      const tile = grid[row][col];
+      if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
+        document.getElementById(`${tile.row}-${tile.col}`)!.className = STYLE_UNTRAVERSED;
       }
     }
   }
