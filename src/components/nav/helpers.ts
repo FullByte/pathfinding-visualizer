@@ -1,7 +1,7 @@
 import { isEqual } from '../../lib/helpers';
 import { bfs } from '../../lib/algorithms/graph';
 import { Algorithm, TileType, GridType } from '../../lib/types';
-import { MAX_ROWS, MAX_COLS, STYLE_UNTRAVERSED } from '../../lib/constants';
+import { MAX_ROWS, MAX_COLS, CELL_STYLE } from '../../lib/constants';
 
 export const runGraphAlgorithm = (
   algorithm: Algorithm,
@@ -45,8 +45,7 @@ export const renderRefreshedGrid = (
       const tile = grid[row][col];
       if (!tile.isWall) {
         if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
-          document.getElementById(`${tile.row}-${tile.col}`)!.className =
-            STYLE_UNTRAVERSED;
+          document.getElementById(`${tile.row}-${tile.col}`)!.className = CELL_STYLE;
         }
       }
     }
@@ -75,7 +74,7 @@ export const renderCleanGrid = (
     for (let col = 0; col < MAX_COLS; col += 1) {
       const tile = grid[row][col];
       if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
-        document.getElementById(`${tile.row}-${tile.col}`)!.className = STYLE_UNTRAVERSED;
+        document.getElementById(`${tile.row}-${tile.col}`)!.className = CELL_STYLE;
       }
     }
   }

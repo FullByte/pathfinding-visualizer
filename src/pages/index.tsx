@@ -25,7 +25,7 @@ export default function Home() {
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
 
   return (
-    <div className={isDark ? 'dark' : ''}>
+    <div className={`${isDark ? 'dark' : ''} min-h-[100vh] min-w-[100vw]`}>
       <div className="transition duration-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white grid grid-cols-1 justify-items-center min-h-screen">
         <div className="flex flex-col ">
           <div className="min-h-[60px] px-40 border-b shadow-md dark:shadow-gray-600">
