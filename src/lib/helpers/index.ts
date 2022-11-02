@@ -6,20 +6,20 @@ import {
   STYLE_WALL_LIGHT,
   SLEEP_TIME_SECS,
   STYLE_VISITED,
+  STYLE_PATH,
 } from '../constants';
-import { GeneralNode, GridType, NodeType } from '../types';
+import { GridType, TileType } from '../types';
 
-// Function to check if node is the start or end node
-function checkIfStartOrEndNode(startNode: NodeType, endNode: NodeType, node: NodeType) {
-  return !isEqual(node, startNode) && !isEqual(node, endNode);
+// Function to check if tile is the start or end tile
+function checkIfStartOrEndTile(startTile: TileType, endTile: TileType, tile: TileType) {
+  return !isEqual(tile, startTile) && !isEqual(tile, endTile);
 }
 
 // Function to sleep the program for a given time
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Function to check if two nodes are the same
-export const isEqual = (a: GeneralNode, b: GeneralNode) =>
-  a.row === b.row && a.col === b.col;
+// Function to check if two tiles are the same
+export const isEqual = (a: TileType, b: TileType) => a.row === b.row && a.col === b.col;
 
 // Function to generate a random integer
 export const getRandInt = (min: number, max: number) => {
@@ -31,8 +31,8 @@ export const getRandInt = (min: number, max: number) => {
 // Function that constructs a border
 export async function constructBorder(
   grid: GridType,
-  startNode: NodeType,
-  endNode: NodeType,
+  startTile: TileType,
+  endTile: TileType,
   isDark: boolean
 ) {
   const shape = [
@@ -47,15 +47,15 @@ export async function constructBorder(
 
   for (let i = 0; i < 4; i += 1) {
     while (row >= 0 && row <= MAX_ROWS - 1 && col >= 0 && col <= MAX_COLS - 1) {
-      const isStartOrEndNode =
-        !isEqual(grid[row][col], startNode) && !isEqual(grid[row][col], endNode);
-      if (isStartOrEndNode) {
+      const isStartOrEndTile =
+        !isEqual(grid[row][col], startTile) && !isEqual(grid[row][col], endTile);
+      if (isStartOrEndTile) {
         grid[row][col].isWall = true;
         document.getElementById(`${row}-${col}`)!.className = `${
           isDark ? STYLE_WALL_LIGHT : STYLE_WALL_DARK
         } animate-wall`;
         // eslint-disable-next-line no-await-in-loop
-        await sleep(SLEEP_TIME_SECS);
+        await sleep(8);
       }
       row += shape[i].row;
       col += shape[i].col;
@@ -65,68 +65,68 @@ export async function constructBorder(
   }
 }
 
-// Function to animate the path from start to end node
+// Function to animate the path from start to end tile
 export const animatePath = (
-  visitedNodes: NodeType[],
-  path: NodeType[],
-  startNode: NodeType,
-  endNode: NodeType
+  visitedTiles: TileType[],
+  path: TileType[],
+  startTile: TileType,
+  endTile: TileType
 ) => {
-  for (let i = 0; i < visitedNodes.length; i += 1) {
+  for (let i = 0; i < visitedTiles.length; i += 1) {
     setTimeout(() => {
-      const node = visitedNodes[i];
-      if (checkIfStartOrEndNode(startNode, endNode, node)) {
+      const tile = visitedTiles[i];
+      if (checkIfStartOrEndTile(startTile, endTile, tile)) {
         document.getElementById(
-          `${node.row}-${node.col}`
+          `${tile.row}-${tile.col}`
         )!.className = `${STYLE_VISITED} animate-visited`;
       }
-    }, SLEEP_TIME_SECS * i);
+    }, 8 * i);
   }
 
   setTimeout(() => {
     for (let i = 0; i < path.length; i += 1) {
       setTimeout(() => {
-        const node = path[i];
-        if (checkIfStartOrEndNode(startNode, endNode, node)) {
+        const tile = path[i];
+        if (checkIfStartOrEndTile(startTile, endTile, tile)) {
           document.getElementById(
-            `${node.row}-${node.col}`
-          )!.className = `${STYLE_VISITED} animate-path`;
+            `${tile.row}-${tile.col}`
+          )!.className = `${STYLE_PATH} animate-path`;
         }
       }, 30 * i);
     }
-  }, 8 * visitedNodes.length);
+  }, 8 * visitedTiles.length);
 };
 
 // Function to create a grid
-export const createGrid = (startNode: NodeType, endNode: NodeType) => {
+export const createGrid = (startTile: TileType, endTile: TileType) => {
   const grid: GridType = [];
   for (let row = 0; row < MAX_ROWS; row += 1) {
-    grid.push(createRow(row, startNode, endNode));
+    grid.push(createRow(row, startTile, endTile));
   }
   return grid;
 };
 
-const createRow = (row: number, startNode: NodeType, endNode: NodeType) => {
+const createRow = (row: number, startTile: TileType, endTile: TileType) => {
   const currentRow = [];
   for (let col = 0; col < MAX_COLS; col += 1) {
-    currentRow.push(createNode(row, col, startNode, endNode));
+    currentRow.push(createTile(row, col, startTile, endTile));
   }
   return currentRow;
 };
 
-const createNode = (
+const createTile = (
   row: number,
   col: number,
-  startNode: GeneralNode,
-  endNode: GeneralNode
+  startTile: TileType,
+  endTile: TileType
 ) => ({
   row,
   col,
-  isEnd: isEqual({ row, col }, endNode),
+  isEnd: row === endTile.row && col === endTile.col,
   isWall: false,
   isPath: false,
   distance: Infinity,
-  isStart: isEqual({ row, col }, startNode),
+  isStart: row === startTile.row && col === startTile.col,
   isTraversed: false,
   parent: null,
 });

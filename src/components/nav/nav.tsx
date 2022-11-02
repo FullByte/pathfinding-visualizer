@@ -1,13 +1,13 @@
 import React from 'react';
 import { SLEEP_TIME_SECS } from '../../lib/constants';
 import { animatePath } from '../../lib/helpers';
-import { Algorithm, NodeType } from '../../lib/types';
+import { Algorithm, TileType } from '../../lib/types';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  gridState: [NodeType[][], React.Dispatch<React.SetStateAction<NodeType[][]>>];
-  startNode: NodeType;
-  endNode: NodeType;
+  gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
+  startTile: TileType;
+  endTile: TileType;
   algorithmState: [Algorithm, React.Dispatch<React.SetStateAction<Algorithm>>];
   isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
   isDarkState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
@@ -16,8 +16,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export function Nav(props: Props) {
   const {
     gridState,
-    startNode,
-    endNode,
+    startTile,
+    endTile,
     algorithmState,
     isGraphVisualizedState,
     isDarkState,
@@ -35,10 +35,10 @@ export function Nav(props: Props) {
   const handleGraphVizualize = () => {
     if (isGraphVisualized) {
       refreshGrid(grid);
-      renderRefreshedGrid(grid, startNode, endNode);
+      renderRefreshedGrid(grid, startTile, endTile);
     }
-    const { visitedNodes, path } = runGraphAlgorithm(algorithm, grid, startNode, endNode);
-    animatePath(visitedNodes, path, startNode, endNode);
+    const { visitedNodes, path } = runGraphAlgorithm(algorithm, grid, startTile, endTile);
+    animatePath(visitedNodes, path, startTile, endTile);
 
     setTimeout(() => {
       const newGrid = grid.slice();

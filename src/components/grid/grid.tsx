@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { MAX_COLS } from '../../lib/constants';
-import { NodeType, Algorithm, Generate, GeneralNode } from '../../lib/types';
-import { runGraphAlgorithm } from '../nav/helpers';
+
+import { Tile } from '../tile';
 import { createNewGrid } from './helpers';
-import { Node } from '../node';
+import { MAX_COLS } from '../../lib/constants';
+import { runGraphAlgorithm } from '../nav/helpers';
+import { TileType, Algorithm, Generate } from '../../lib/types';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  startNodeState: [NodeType, React.Dispatch<React.SetStateAction<NodeType>>];
-  endNodeState: [NodeType, React.Dispatch<React.SetStateAction<NodeType>>];
-  gridState: [NodeType[][], React.Dispatch<React.SetStateAction<NodeType[][]>>];
+  startTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
+  endTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
+  gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
   algorithm: Algorithm;
   isGraphVisualized: boolean;
   isDark: boolean;
@@ -16,16 +17,16 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Grid(props: Props) {
   const {
-    startNodeState,
-    endNodeState,
+    startTileState,
+    endTileState,
     gridState,
     algorithm,
     isGraphVisualized,
     isDark,
   } = props;
 
-  const [startNode, setStartNode] = startNodeState;
-  const [endNode, setEndNode] = endNodeState;
+  const [startTile, setStartTile] = startTileState;
+  const [endTile, setEndTile] = endTileState;
   const [grid, setGrid] = gridState;
   const [generate, setGenerate] = useState(Generate.WALL);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
@@ -66,7 +67,7 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setStartNode(newStateNode);
+          setStartTile(newStateNode);
         } else if (generate === Generate.END) {
           const newEndNode = {
             row,
@@ -79,7 +80,7 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setEndNode(newEndNode);
+          setEndTile(newEndNode);
         }
         setGrid(newGrid);
       }
@@ -104,8 +105,8 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setStartNode(newStartNode);
-          runGraphAlgorithm(algorithm, newGrid, newStartNode, endNode);
+          setStartTile(newStartNode);
+          runGraphAlgorithm(algorithm, newGrid, newStartNode, endTile);
         } else if (generate === Generate.END) {
           const newEndNode = {
             row,
@@ -118,8 +119,8 @@ export function Grid(props: Props) {
             parent: null,
             distance: Infinity,
           };
-          setEndNode(newEndNode);
-          runGraphAlgorithm(algorithm, newGrid, startNode, newEndNode);
+          setEndTile(newEndNode);
+          runGraphAlgorithm(algorithm, newGrid, startTile, newEndNode);
         }
       }
       setGrid(newGrid);
@@ -148,7 +149,7 @@ export function Grid(props: Props) {
           {r.map((node, nodeIdx) => {
             const { row, col, isStart, isEnd, isTraversed, isWall, isPath } = node;
             return (
-              <Node
+              <Tile
                 key={nodeIdx}
                 row={row}
                 col={col}

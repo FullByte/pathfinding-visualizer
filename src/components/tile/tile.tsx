@@ -25,7 +25,7 @@ interface Props {
   onMouseOut: Function;
 }
 
-export function Node(props: Props) {
+export function Tile(props: Props) {
   const {
     row,
     col,

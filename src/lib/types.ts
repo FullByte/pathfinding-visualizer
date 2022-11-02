@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export type NodeType = {
+export type TileType = {
   row: number;
   col: number;
   isEnd: boolean;
@@ -11,14 +11,7 @@ export type NodeType = {
   parent: Node | any;
 };
 
-export type SimpleNode = {
-  row: number;
-  col: number;
-};
-
-export type GeneralNode = NodeType | SimpleNode;
-
-export type GridType = NodeType[][];
+export type GridType = TileType[][];
 
 export enum Algorithm {
   DIJKSTRA = 'DIJKSTRA',

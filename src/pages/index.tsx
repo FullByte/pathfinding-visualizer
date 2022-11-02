@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-
+import { Nav } from '../components/nav';
 import { Algorithm } from '../lib/types';
+import { Grid } from '../components/grid';
 import { createGrid } from '../lib/helpers';
 import { END_INIT, MAX_ROWS, START_INIT } from '../lib/constants';
-import { Nav } from '../components/nav';
-import { Grid } from '../components/grid';
 
 export default function Home() {
   // const themePreference =
@@ -13,9 +12,9 @@ export default function Home() {
   const [isDark, setIsDark] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState(true);
   const [algorithm, setAlgorithm] = useState(Algorithm.BFS);
-  const [endNode, setEndNode] = useState(END_INIT);
-  const [startNode, setStartNode] = useState(START_INIT);
-  const [grid, setGrid] = useState(createGrid(startNode, endNode));
+  const [endTile, setEndTile] = useState(END_INIT);
+  const [startTile, setStartTile] = useState(START_INIT);
+  const [grid, setGrid] = useState(createGrid(startTile, endTile));
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
 
   return (
@@ -25,8 +24,8 @@ export default function Home() {
           <div className="min-h-[60px] px-40 border-b shadow-md dark:shadow-gray-600">
             <Nav
               gridState={[grid, setGrid]}
-              startNode={startNode}
-              endNode={endNode}
+              startTile={startTile}
+              endTile={endTile}
               algorithmState={[algorithm, setAlgorithm]}
               isGraphVisualizedState={[isGraphVisualized, setIsGraphVisualized]}
               isDarkState={[darkMode, setDarkMode]}
@@ -34,8 +33,8 @@ export default function Home() {
           </div>
           <div className={`px-40 min-h-[${MAX_ROWS * 20}px]`}>
             <Grid
-              startNodeState={[startNode, setStartNode]}
-              endNodeState={[endNode, setEndNode]}
+              startTileState={[startTile, setStartTile]}
+              endTileState={[endTile, setEndTile]}
               gridState={[grid, setGrid]}
               algorithm={algorithm}
               isGraphVisualized={isGraphVisualized}
