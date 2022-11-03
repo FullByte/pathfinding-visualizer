@@ -4,19 +4,10 @@ import { Algorithm } from '../lib/types';
 import { Grid } from '../components/grid';
 import { createGrid } from '../lib/helpers';
 import { END_INIT, MAX_ROWS, START_INIT } from '../lib/constants';
+import { useTheme } from '../hooks/useTheme';
 
 export default function Home() {
-  let themePreference = true;
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      themePreference =
-        localStorage.theme === 'dark' ||
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-  }, []);
-
-  const [isDark, setIsDark] = useState<boolean>(themePreference);
+  const [isDarkMode] = useTheme();
   const [darkMode, setDarkMode] = useState(true);
   const [algorithm, setAlgorithm] = useState(Algorithm.BFS);
   const [endTile, setEndTile] = useState(END_INIT);
@@ -25,7 +16,7 @@ export default function Home() {
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
 
   return (
-    <div className={`${isDark ? 'dark' : ''} min-h-[100vh] min-w-[100vw]`}>
+    <div className={`${isDarkMode ? 'dark' : ''} min-h-[100vh] min-w-[100vw]`}>
       <div className="transition duration-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white grid grid-cols-1 justify-items-center min-h-screen">
         <div className="flex flex-col ">
           <div className="min-h-[60px] px-40 border-b shadow-md dark:shadow-gray-600">

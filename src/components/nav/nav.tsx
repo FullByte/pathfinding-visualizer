@@ -3,6 +3,7 @@ import { animatePath } from '../../lib/helpers';
 import { Algorithm, TileType } from '../../lib/types';
 import { SLEEP_TIME, EXTENDED_SLEEP_TIME } from '../../lib/constants';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
+import { ThemeToggle } from '../toggle';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
@@ -86,6 +87,7 @@ export function Nav(props: Props) {
         >
           VISUALIZE
         </button>
+        <ThemeToggle />
       </div>
     </div>
   );

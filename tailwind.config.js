@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: "class",
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     screens: {
       xs: '400px',
@@ -12,6 +13,54 @@ content: ['./src/**/*.{js,ts,jsx,tsx}'],
       '2xl': '1536px',
     },
     extend: {
+      colors: {
+        primary: {
+          black: "#0C0C0D",
+          white: "#FFFFFF",
+          blue: "#3377FF",
+          green: "#3DB958",
+          yellow: "#F5C237",
+          red: "#E13251",
+          purple: "#884FF2",
+        },
+        system: {
+          grey1: "#F8F8F8",
+          grey2: "#ECEDED",
+          grey3: "#C3C4C8",
+          grey4: "#969BA5",
+          grey5: "#6E717A",
+          grey6: "#292A2D",
+          grey7: "#131416",
+        },
+        dark: {
+          blue1: "#122FC8",
+          blue2: "#080E8A",
+          green1: "#1A7047",
+          green2: "#043E22",
+          yellow1: "#D1963C",
+          yellow2: "#945901",
+          red1: "#AB1035",
+          red2: "#6D001A",
+          purple1: "#5E0CC6",
+          purple2: "#330371",
+        },
+        light: {
+          blue1: "#6F9FFF",
+          blue2: "#D3E1FC",
+          green1: "#80E0A5",
+          green2: "#DAFBE7",
+          yellow1: "#F1E18F",
+          yellow2: "#FFF9DA",
+          red1: "#EF7C98",
+          red2: "#FED0DB",
+          purple1: "#B57AFF",
+          purple2: "#D9D3FD",
+        },
+      },
+      textColor: (theme) => theme("colors"),
+      caretColor: (theme) => theme("colors"),
+      divideColor: (theme) => theme("colors"),
+      backgroundColor: (theme) => theme("colors"),
       keyframes: {
         toggleOff: {
           "0%": { transform: "scale(1) rotate(0deg)" },
@@ -72,8 +121,6 @@ content: ['./src/**/*.{js,ts,jsx,tsx}'],
         },
       },
       animation: {
-        toggleOff: "toggleOff 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-        toggleOn: "toggleOn 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
         traversed: "traversed 1.5s cubic-bezier(0, 0, 0.2, 1)",
         path: "path 1.5s cubic-bezier(0, 0, 0.2, 1)",
         wall: "wall 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -81,5 +128,4 @@ content: ['./src/**/*.{js,ts,jsx,tsx}'],
     },
   },
   plugins: [],
-  darkMode: "class",
 };
