@@ -45,12 +45,20 @@ export const renderRefreshedGrid = (
       const tile = grid[row][col];
       if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
         tile.isWall = false;
-        if (tile.row === 39 && (tile.col === 48 || tile.col === 49)) {
+        if (tile.row === 39 && tile.col === 0) {
+          document.getElementById(
+            `${tile.row}-${tile.col}`
+          )!.className = `${CELL_STYLE} border-b border-l`;
+        } else if (tile.row === 39) {
           document.getElementById(
             `${tile.row}-${tile.col}`
           )!.className = `${CELL_STYLE} border-b`;
+        } else if (tile.col === 0) {
+          document.getElementById(
+            `${tile.row}-${tile.col}`
+          )!.className = `${CELL_STYLE} border-l`;
         } else {
-          document.getElementById(`${tile.row}-${tile.col}`)!.className = CELL_STYLE;
+          document.getElementById(`${tile.row}-${tile.col}`)!.className = `${CELL_STYLE}`;
         }
       }
     }
