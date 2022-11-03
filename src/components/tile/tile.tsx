@@ -2,15 +2,14 @@ import React from 'react';
 import { useTheme } from '../../hooks';
 
 import {
-  STYLE_START,
-  STYLE_END,
-  STYLE_WALL_LIGHT,
-  STYLE_WALL_DARK,
-  CELL_STYLE,
-  STYLE_TRAVERSED,
-  STYLE_PATH,
-  MAX_COLS,
   MAX_ROWS,
+  STYLE_END,
+  CELL_STYLE,
+  STYLE_PATH,
+  STYLE_START,
+  STYLE_WALL_DARK,
+  STYLE_TRAVERSED,
+  STYLE_WALL_LIGHT,
 } from '../../lib/constants';
 
 interface Props {

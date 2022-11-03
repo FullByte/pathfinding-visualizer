@@ -43,8 +43,13 @@ export const renderRefreshedGrid = (
   for (let row = 0; row < MAX_ROWS; row += 1) {
     for (let col = 0; col < MAX_COLS; col += 1) {
       const tile = grid[row][col];
-      if (!tile.isWall) {
-        if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
+      if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
+        tile.isWall = false;
+        if (tile.row === 39 && (tile.col === 48 || tile.col === 49)) {
+          document.getElementById(
+            `${tile.row}-${tile.col}`
+          )!.className = `${CELL_STYLE} border-b`;
+        } else {
           document.getElementById(`${tile.row}-${tile.col}`)!.className = CELL_STYLE;
         }
       }
