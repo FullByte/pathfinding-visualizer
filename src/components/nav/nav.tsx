@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { GrPowerReset } from 'react-icons/gr';
-import { AiFillPlayCircle } from 'react-icons/ai';
+import { BsFillPlayFill } from 'react-icons/bs';
 import { animatePath, createGrid } from '../../lib/helpers';
 import { Algorithm, TileType } from '../../lib/types';
 import {
@@ -24,12 +24,34 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 function Logo() {
   return (
-    <div
-      className="text-center text-2xl font-manrope "
-      onClick={() => window.location.reload()}
-    >
+    <div className="sm:flex hidden w-[50%] text-center text-2xl font-manrope ">
       Pathfinding Visualizer
     </div>
+  );
+}
+
+interface Props2 extends React.HTMLAttributes<HTMLButtonElement> {
+  handleRunVizualizer: MouseEventHandler<HTMLButtonElement>;
+  disabled: boolean;
+  isGraphVisualized: boolean;
+}
+
+function VisualizerToggle(props: Props2) {
+  const { handleRunVizualizer, disabled, isGraphVisualized, ...rest } = props;
+  const classes = `transition ease-in bg-light-green1 hover:bg-primary-green rounded-full px-2.5 py-2.5  py-1 shadow-md disabled:opacity-50 disabled:hover:bg-light-green1 dark:text-system-grey7 dark:bg-primary-green dark:hover:bg-light-green1 disabled:dark:hover:bg-primary-green`;
+  return (
+    <button
+      disabled={disabled}
+      className={classes}
+      onClick={handleRunVizualizer}
+      {...rest}
+    >
+      {isGraphVisualized ? (
+        <GrPowerReset className="w-5 h-5" />
+      ) : (
+        <BsFillPlayFill className="w-5 h-5" />
+      )}
+    </button>
   );
 }
 
@@ -85,39 +107,37 @@ export function Nav(props: Props) {
   };
 
   return (
-    <div className="min-h-[60px] border-b shadow-md dark:shadow-gray-600" {...rest}>
-      <div className="flex h-full w-full items-center justify-between">
+    <div
+      className="flex items-center justify-center min-h-[60px] border-b shadow-md dark:shadow-gray-600 "
+      {...rest}
+    >
+      <div className="flex h-full items-center w-[1040px] justify-between px-[20px] columns-2">
         <Logo />
-        <div className="flex flex-row items-center gap-6">
-          <ThemeToggle curRef={curRef} />
-
-          <div className="relative group">
-            <button className="transition ease-in border-2 border-transparent hover:border-sky-400 text-[15px] font-mono font-bold rounded px-2.5 py-1">
-              {algorithm}
-            </button>
-            <div className="hidden group-hover:table">
-              <div className="absolute z-10 -ml-[12px] transform px-2 w-screen max-w-[225px] py-1.5">
-                <div className="shadow-lg ring-1 ring-black dark:rink-white ring-opacity-5">
-                  <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
-                    <button
-                      className="rounded text-[15px] text-left font-mono font-bold border-2 border-transparent hover:border-sky-400 p-1.5"
-                      onClick={() => handleAlgorithmChoice(Algorithm.BFS)}
-                    >
-                      BREADTH-FIRST SEARCH
-                    </button>
-                  </div>
+        <ThemeToggle curRef={curRef} />
+        <div className="relative group">
+          <button className="transition ease-in border-2 border-transparent hover:border-sky-400 text-[15px] font-mono font-bold rounded px-2.5 py-1">
+            {algorithm}
+          </button>
+          <div className="hidden group-hover:table">
+            <div className="absolute z-10 -ml-[12px] transform px-2 w-screen max-w-[225px] py-1.5">
+              <div className="shadow-lg ring-1 ring-black dark:rink-white ring-opacity-5">
+                <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
+                  <button
+                    className="rounded text-[15px] text-left font-mono font-bold border-2 border-transparent hover:border-sky-400 p-1.5"
+                    onClick={() => handleAlgorithmChoice(Algorithm.BFS)}
+                  >
+                    BREADTH-FIRST SEARCH
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <button
-            className="transition ease-in bg-sky-400 hover:bg-sky-500 text-[15px] font-mono font-bold rounded px-2.5 py-1 shadow-md shadow-sky-900/50 active:shadow-sky-900/30 dark:shadow-sky-400/50 dark:active:shadow-sky-400/30 disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={handleRunVizualizer}
-            disabled={disabled}
-          >
-            {isGraphVisualized ? `Reset` : `VISUALIZE`}
-          </button>
         </div>
+        <VisualizerToggle
+          disabled={disabled}
+          isGraphVisualized={isGraphVisualized}
+          handleRunVizualizer={handleRunVizualizer}
+        />
       </div>
     </div>
   );

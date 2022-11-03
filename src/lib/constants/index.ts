@@ -30,9 +30,9 @@ export const EXTENDED_SLEEP_TIME = 30;
 export const CELL_STYLE =
   'lg:w-[20px] md:w-[15px] xs:w-[8px] w-[7px] lg:h-[20px] md:h-[15px] xs:h-[8px] h-[7px] border-t border-r border-sky-200';
 export const STYLE_TRAVERSED = CELL_STYLE + ' bg-cyan-400';
-export const STYLE_START = CELL_STYLE + ' bg-emerald-400';
-export const STYLE_END = CELL_STYLE + ' bg-rose-400';
-export const STYLE_WALL_DARK = CELL_STYLE + ' bg-gray-700';
-export const STYLE_WALL_LIGHT = CELL_STYLE + ' bg-gray-100';
-export const STYLE_PATH = CELL_STYLE + ' bg-amber-200';
+export const STYLE_START = CELL_STYLE + ' bg-light-green1';
+export const STYLE_END = CELL_STYLE + ' bg-light-red1';
+export const STYLE_WALL_DARK = CELL_STYLE + ' bg-system-grey3';
+export const STYLE_WALL_LIGHT = CELL_STYLE + ' bg-system-grey2';
+export const STYLE_PATH = CELL_STYLE + ' bg-primary-green';
 export const STYLE_BACKTRACK = CELL_STYLE + ' bg-sky-400';
