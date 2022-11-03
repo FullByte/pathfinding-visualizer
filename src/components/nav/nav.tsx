@@ -19,6 +19,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   algorithmState: [Algorithm, React.Dispatch<React.SetStateAction<Algorithm>>];
   isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
   isRunningState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+  curRef: React.MutableRefObject<boolean>;
 }
 
 function Logo() {
@@ -40,6 +41,7 @@ export function Nav(props: Props) {
     algorithmState,
     isGraphVisualizedState,
     isRunningState,
+    curRef,
     ...rest
   } = props;
   const [endTile, setEndTile] = endTileState;
@@ -69,13 +71,16 @@ export function Nav(props: Props) {
       startTile,
       endTile
     );
+
     animatePath(traversedTiles, path, startTile, endTile);
     setDisabled(true);
+    curRef.current = true;
     setTimeout(() => {
       const newGrid = grid.slice();
       setGrid(newGrid);
       setIsGraphVisualized(true);
       setDisabled(false);
+      curRef.current = false;
     }, SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60));
   };
 
@@ -84,6 +89,8 @@ export function Nav(props: Props) {
       <div className="flex h-full w-full items-center justify-between">
         <Logo />
         <div className="flex flex-row items-center gap-6">
+          <ThemeToggle curRef={curRef} />
+
           <div className="relative group">
             <button className="transition ease-in border-2 border-transparent hover:border-sky-400 text-[15px] font-mono font-bold rounded px-2.5 py-1">
               {algorithm}
@@ -110,7 +117,6 @@ export function Nav(props: Props) {
           >
             {isGraphVisualized ? `Reset` : `VISUALIZE`}
           </button>
-          <ThemeToggle />
         </div>
       </div>
     </div>

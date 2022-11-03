@@ -12,10 +12,18 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
   algorithm: Algorithm;
   isGraphVisualized: boolean;
+  curRef: React.MutableRefObject<boolean>;
 }
 
 export function Grid(props: Props) {
-  const { startTileState, endTileState, gridState, algorithm, isGraphVisualized } = props;
+  const {
+    startTileState,
+    endTileState,
+    gridState,
+    algorithm,
+    isGraphVisualized,
+    curRef,
+  } = props;
 
   const [grid, setGrid] = gridState;
   const [endTile, setEndTile] = endTileState;
@@ -29,6 +37,8 @@ export function Grid(props: Props) {
     isStart: boolean,
     isEnd: boolean
   ) => {
+    if (curRef.current) return;
+
     setIsMouseDown(true);
     if (isStart) {
       setGenerate(Generate.START);
@@ -42,6 +52,8 @@ export function Grid(props: Props) {
   };
 
   const handleMouseUp = (row: number, col: number) => {
+    if (curRef.current) return;
+
     if (generate !== Generate.WALL) {
       if (!isGraphVisualized) {
         const newGrid = createNewGrid(grid, row, col, generate, isGraphVisualized);
@@ -82,6 +94,7 @@ export function Grid(props: Props) {
   };
 
   const handleMouseEnter = (row: number, col: number) => {
+    if (curRef.current) return;
     if (isMouseDown) {
       const newGrid = createNewGrid(grid, row, col, generate, isGraphVisualized);
       if (isGraphVisualized) {
@@ -120,6 +133,8 @@ export function Grid(props: Props) {
   };
 
   const handleMouseOut = (row: number, col: number) => {
+    if (curRef.current) return;
+
     if (generate !== Generate.WALL) {
       const newGrid = createNewGrid(
         grid,
