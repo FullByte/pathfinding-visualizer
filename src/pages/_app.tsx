@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       setIsDarkMode(localStorage.getItem('darkMode') === 'true');
     }
   }, []);
+
   return (
     <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
       <Component {...pageProps} />

@@ -1,58 +1,19 @@
-import React, { MouseEventHandler, useState } from 'react';
-import { GrPowerReset } from 'react-icons/gr';
-import { BsFillPlayFill } from 'react-icons/bs';
-import { animatePath, createGrid } from '../../lib/helpers';
+import React, { useState } from 'react';
+
+import { animatePath } from '../../lib/helpers';
 import { Algorithm, TileType } from '../../lib/types';
-import {
-  SLEEP_TIME,
-  EXTENDED_SLEEP_TIME,
-  START_INIT,
-  END_INIT,
-} from '../../lib/constants';
+import { SLEEP_TIME, EXTENDED_SLEEP_TIME } from '../../lib/constants';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
 import { ThemeToggle } from '../toggle';
+import { Logo, VisualizerToggle } from '.';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
-  startTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
-  endTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
-  algorithmState: [Algorithm, React.Dispatch<React.SetStateAction<Algorithm>>];
-  isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-  isRunningState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
   curRef: React.MutableRefObject<boolean>;
-}
-
-function Logo() {
-  return (
-    <div className="sm:flex hidden w-[50%] text-center text-2xl font-manrope ">
-      Pathfinding Visualizer
-    </div>
-  );
-}
-
-interface Props2 extends React.HTMLAttributes<HTMLButtonElement> {
-  handleRunVizualizer: MouseEventHandler<HTMLButtonElement>;
-  disabled: boolean;
-  isGraphVisualized: boolean;
-}
-
-function VisualizerToggle(props: Props2) {
-  const { handleRunVizualizer, disabled, isGraphVisualized, ...rest } = props;
-  const classes = `transition ease-in bg-light-green1 hover:bg-primary-green rounded-full px-2.5 py-2.5  py-1 shadow-md disabled:opacity-50 disabled:hover:bg-light-green1 dark:text-system-grey7 dark:bg-primary-green dark:hover:bg-light-green1 disabled:dark:hover:bg-primary-green`;
-  return (
-    <button
-      disabled={disabled}
-      className={classes}
-      onClick={handleRunVizualizer}
-      {...rest}
-    >
-      {isGraphVisualized ? (
-        <GrPowerReset className="w-5 h-5" />
-      ) : (
-        <BsFillPlayFill className="w-5 h-5" />
-      )}
-    </button>
-  );
+  endTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
+  startTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
+  algorithmState: [Algorithm, React.Dispatch<React.SetStateAction<Algorithm>>];
+  gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
+  isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
 
 export function Nav(props: Props) {
@@ -62,7 +23,6 @@ export function Nav(props: Props) {
     endTileState,
     algorithmState,
     isGraphVisualizedState,
-    isRunningState,
     curRef,
     ...rest
   } = props;
@@ -71,7 +31,6 @@ export function Nav(props: Props) {
   const [grid, setGrid] = gridState;
   const [algorithm, setAlgorithm] = algorithmState;
   const [isGraphVisualized, setIsGraphVisualized] = isGraphVisualizedState;
-  const [isRunning, setIsRunning] = isRunningState;
   const [disabled, setDisabled] = useState(false);
 
   const handleAlgorithmChoice = (algo: Algorithm) => {
@@ -123,10 +82,10 @@ export function Nav(props: Props) {
               <div className="shadow-lg ring-1 ring-black dark:rink-white ring-opacity-5">
                 <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
                   <button
-                    className="rounded text-[15px] text-left font-mono font-bold border-2 border-transparent hover:border-sky-400 p-1.5"
+                    className="rounded text-[15px] text-left font-manrope tracking-wide	 border-2 border-transparent hover:border-sky-400 p-1.5"
                     onClick={() => handleAlgorithmChoice(Algorithm.BFS)}
                   >
-                    BREADTH-FIRST SEARCH
+                    Breadth-First Search
                   </button>
                 </div>
               </div>
