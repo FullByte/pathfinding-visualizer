@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Tile } from '../tile';
 import { createNewGrid } from './helpers';
-import { MAX_COLS } from '../../lib/constants';
+import { MAX_COLS, MAX_ROWS } from '../../lib/constants';
 import { runGraphAlgorithm } from '../nav/helpers';
 import { TileType, Algorithm, Generate } from '../../lib/types';
 
@@ -12,22 +12,14 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
   algorithm: Algorithm;
   isGraphVisualized: boolean;
-  isDark: boolean;
 }
 
 export function Grid(props: Props) {
-  const {
-    startTileState,
-    endTileState,
-    gridState,
-    algorithm,
-    isGraphVisualized,
-    isDark,
-  } = props;
+  const { startTileState, endTileState, gridState, algorithm, isGraphVisualized } = props;
 
-  const [startTile, setStartTile] = startTileState;
-  const [endTile, setEndTile] = endTileState;
   const [grid, setGrid] = gridState;
+  const [endTile, setEndTile] = endTileState;
+  const [startTile, setStartTile] = startTileState;
   const [generate, setGenerate] = useState(Generate.WALL);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
@@ -142,9 +134,13 @@ export function Grid(props: Props) {
 
   return (
     <div
-      className={`flex mt-[40px] flex-col border-l border-b border-sky-200 lg:w-[${
-        MAX_COLS * 20
-      }px] w-[${MAX_COLS * 10}px]`}
+      className={`flex items-center flex-col justify-center mt-[40px] lg:min-h-[${
+        MAX_ROWS * 20
+      }px] md:min-h-[${MAX_ROWS * 15}px] xs:min-h-[${MAX_ROWS * 80}px] min-h-[${
+        MAX_ROWS * 7
+      }px]  border-sky-200 lg:w-[${MAX_COLS * 20}px] md:w-[${MAX_COLS * 15}px] xs:w-[${
+        MAX_COLS * 8
+      }px] w-[${MAX_COLS * 7}px]`}
     >
       {grid.map((r, rowIdx) => (
         <div key={rowIdx} className="flex">
@@ -160,7 +156,6 @@ export function Grid(props: Props) {
                 isTraversed={isTraversed}
                 isWall={isWall}
                 isPath={isPath}
-                isDark={isDark}
                 onMouseDown={() => handleMouseDown(row, col, isStart, isEnd)}
                 onMouseUp={() => handleMouseUp(row, col)}
                 onMouseEnter={() => handleMouseEnter(row, col)}

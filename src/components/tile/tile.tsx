@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../../hooks';
 
 import {
   STYLE_START,
@@ -8,6 +9,8 @@ import {
   CELL_STYLE,
   STYLE_TRAVERSED,
   STYLE_PATH,
+  MAX_COLS,
+  MAX_ROWS,
 } from '../../lib/constants';
 
 interface Props {
@@ -18,7 +21,6 @@ interface Props {
   isWall: boolean;
   isTraversed: boolean;
   isPath: boolean;
-  isDark: boolean;
   onMouseDown: Function;
   onMouseEnter: Function;
   onMouseUp: Function;
@@ -38,21 +40,26 @@ export function Tile(props: Props) {
     onMouseEnter,
     onMouseUp,
     onMouseOut,
-    isDark,
   } = props;
-  const style = isStart
+  const [isDarkMode] = useTheme();
+
+  const tileTypeStyle = isStart
     ? STYLE_START
     : isEnd
     ? STYLE_END
-    : isWall && isDark
+    : isWall && isDarkMode
     ? STYLE_WALL_LIGHT
-    : isWall && !isDark
+    : isWall && !isDarkMode
     ? STYLE_WALL_DARK
     : isPath
     ? STYLE_PATH
     : isTraversed
     ? STYLE_TRAVERSED
     : CELL_STYLE;
+
+  const borderStyle = row === MAX_ROWS - 1 ? ` border-b` : col === 0 ? ` border-l ` : '';
+  const edgeStyle = row === MAX_ROWS - 1 && col === 0 ? ' border-l' : '';
+  const style = tileTypeStyle + borderStyle + edgeStyle;
 
   return (
     <div

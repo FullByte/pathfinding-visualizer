@@ -11,7 +11,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   endTile: TileType;
   algorithmState: [Algorithm, React.Dispatch<React.SetStateAction<Algorithm>>];
   isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-  isDarkState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
 
 export function Nav(props: Props) {
@@ -21,11 +20,9 @@ export function Nav(props: Props) {
     endTile,
     algorithmState,
     isGraphVisualizedState,
-    isDarkState,
     ...rest
   } = props;
   const [grid, setGrid] = gridState;
-  const [isDark, setIsDark] = isDarkState;
   const [algorithm, setAlgorithm] = algorithmState;
   const [isGraphVisualized, setIsGraphVisualized] = isGraphVisualizedState;
 
@@ -54,12 +51,12 @@ export function Nav(props: Props) {
   };
 
   return (
-    <div className="flex flex-row h-full items-center justify-between" {...rest}>
+    <div className="flex h-full w-full items-center justify-between" {...rest}>
       <button
-        className="text-center text-2xl font-mono font-extrabold"
+        className="text-center text-2xl font-manrope font-extrabold"
         onClick={() => window.location.reload()}
       >
-        PATHFINDING VISUALIZER
+        Pathfinding Visualizer
       </button>
       <div className="flex flex-row items-center gap-6">
         <div className="relative group">
