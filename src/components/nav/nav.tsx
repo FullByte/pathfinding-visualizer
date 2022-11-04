@@ -7,25 +7,25 @@ import { animatePath } from '../../lib/helpers';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
 import { SLEEP_TIME, EXTENDED_SLEEP_TIME, ALGORITHMS } from '../../lib/constants';
 import {
-  AlgorithmContext,
-  EndTileContext,
   GridContext,
+  EndTileContext,
+  AlgorithmContext,
+  VisualizedContext,
   StartTileContext,
 } from '../../hooks';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
-  isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
 
 export function Nav(props: Props) {
-  const { isGraphVisualizedState, curRef, ...rest } = props;
-  const { grid, setGrid } = useContext(GridContext);
-  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
-  const { startTile, setStartTile } = useContext(StartTileContext);
-  const { endTile, setEndTile } = useContext(EndTileContext);
-  const [isGraphVisualized, setIsGraphVisualized] = isGraphVisualizedState;
+  const { curRef, ...rest } = props;
   const [disabled, setDisabled] = useState(false);
+  const { grid, setGrid } = useContext(GridContext);
+  const { endTile } = useContext(EndTileContext);
+  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
+  const { startTile } = useContext(StartTileContext);
+  const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
   const handleRunVizualizer = () => {
     if (isGraphVisualized) {

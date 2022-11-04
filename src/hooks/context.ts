@@ -22,6 +22,11 @@ interface GridContextInterface {
   setGrid: (grid: GridType) => void;
 }
 
+interface isGraphVisualizedContextInterface {
+  isGraphVisualized: boolean;
+  setIsGraphVisualized: (isGraphVisualized: boolean) => void;
+}
+
 export const AlgorithmContext = createContext({} as AlgorithmContextInterface);
 
 export const StartTileContext = createContext({} as StartTileContextInterface);
@@ -29,3 +34,5 @@ export const StartTileContext = createContext({} as StartTileContextInterface);
 export const EndTileContext = createContext({} as EndTileContextInterface);
 
 export const GridContext = createContext({} as GridContextInterface);
+
+export const VisualizedContext = createContext({} as isGraphVisualizedContextInterface);

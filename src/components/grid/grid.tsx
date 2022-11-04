@@ -10,15 +10,15 @@ import {
   EndTileContext,
   GridContext,
   StartTileContext,
+  VisualizedContext,
 } from '../../hooks';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  isGraphVisualized: boolean;
   curRef: React.MutableRefObject<boolean>;
 }
 
 export function Grid(props: Props) {
-  const { isGraphVisualized, curRef } = props;
+  const { curRef } = props;
 
   const { grid, setGrid } = useContext(GridContext);
   const { endTile, setEndTile } = useContext(EndTileContext);
@@ -26,6 +26,7 @@ export function Grid(props: Props) {
   const [generate, setGenerate] = useState(Generate.WALL);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+  const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
   const handleMouseDown = (
     row: number,

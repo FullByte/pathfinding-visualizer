@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Nav } from '../components/nav';
 import { Grid } from '../components/grid';
 import { useTheme } from '../hooks/useTheme';
@@ -6,8 +6,6 @@ import { useTheme } from '../hooks/useTheme';
 export default function Home() {
   const curRef = useRef(false);
   const [isDarkMode] = useTheme();
-
-  const [isGraphVisualized, setIsGraphVisualized] = useState(false);
 
   const flexCLass = `flex flex-col w-full`;
   const theme = `${isDarkMode ? 'dark' : ''}`;
@@ -18,11 +16,8 @@ export default function Home() {
     <div className={mainClass}>
       <div className={subClass}>
         <div className={flexCLass}>
-          <Nav
-            curRef={curRef}
-            isGraphVisualizedState={[isGraphVisualized, setIsGraphVisualized]}
-          />
-          <Grid curRef={curRef} isGraphVisualized={isGraphVisualized} />
+          <Nav curRef={curRef} />
+          <Grid curRef={curRef} />
         </div>
       </div>
     </div>

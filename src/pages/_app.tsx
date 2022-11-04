@@ -4,23 +4,25 @@ import '../styles/globals.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'tailwindcss/tailwind.css';
 
-import { Algorithm } from '../lib/types';
 import {
   AlgorithmContext,
   EndTileContext,
   GridContext,
+  VisualizedContext,
   StartTileContext,
 } from '../hooks';
+import { Algorithm } from '../lib/types';
+import { createGrid } from '../lib/helpers';
 import { ThemeContext } from '../hooks/useTheme';
 import { END_INIT, START_INIT } from '../lib/constants';
-import { createGrid } from '../lib/helpers';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [algorithm, setAlgorithm] = useState<Algorithm>(Algorithm.BFS);
   const [endTile, setEndTile] = useState(END_INIT);
   const [startTile, setStartTile] = useState(START_INIT);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [grid, setGrid] = useState(createGrid(startTile, endTile));
+  const [isGraphVisualized, setIsGraphVisualized] = useState(false);
+  const [algorithm, setAlgorithm] = useState<Algorithm>(Algorithm.BFS);
 
   useEffect(() => {
     if (localStorage.getItem('darkMode')) {
@@ -29,16 +31,18 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-      <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
-        <StartTileContext.Provider value={{ startTile, setStartTile }}>
-          <EndTileContext.Provider value={{ endTile, setEndTile }}>
-            <GridContext.Provider value={{ grid, setGrid }}>
-              <Component {...pageProps} />
-            </GridContext.Provider>
-          </EndTileContext.Provider>
-        </StartTileContext.Provider>
-      </AlgorithmContext.Provider>
-    </ThemeContext.Provider>
+    <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
+      <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+        <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
+          <StartTileContext.Provider value={{ startTile, setStartTile }}>
+            <EndTileContext.Provider value={{ endTile, setEndTile }}>
+              <GridContext.Provider value={{ grid, setGrid }}>
+                <Component {...pageProps} />
+              </GridContext.Provider>
+            </EndTileContext.Provider>
+          </StartTileContext.Provider>
+        </AlgorithmContext.Provider>
+      </ThemeContext.Provider>
+    </VisualizedContext.Provider>
   );
 }

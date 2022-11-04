@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Algorithm, AlgorithmType } from '../../lib/types';
+
 import { ALGORITHMS } from '../../lib/constants';
+import { Algorithm, AlgorithmType } from '../../lib/types';
 
 interface Props {
   options: AlgorithmType[];
