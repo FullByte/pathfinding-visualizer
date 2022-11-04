@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Nav } from '../components/nav';
-import { Algorithm } from '../lib/types';
 import { Grid } from '../components/grid';
 import { createGrid } from '../lib/helpers';
 import { useTheme } from '../hooks/useTheme';
@@ -11,7 +10,6 @@ export default function Home() {
   const [isDarkMode] = useTheme();
   const [endTile, setEndTile] = useState(END_INIT);
   const [startTile, setStartTile] = useState(START_INIT);
-  const [algorithm, setAlgorithm] = useState(Algorithm.BFS);
   const [grid, setGrid] = useState(createGrid(startTile, endTile));
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
 
@@ -29,7 +27,6 @@ export default function Home() {
             gridState={[grid, setGrid]}
             startTileState={[startTile, setStartTile]}
             endTileState={[endTile, setEndTile]}
-            algorithmState={[algorithm, setAlgorithm]}
             isGraphVisualizedState={[isGraphVisualized, setIsGraphVisualized]}
           />
           <Grid
@@ -37,7 +34,6 @@ export default function Home() {
             startTileState={[startTile, setStartTile]}
             endTileState={[endTile, setEndTile]}
             gridState={[grid, setGrid]}
-            algorithm={algorithm}
             isGraphVisualized={isGraphVisualized}
           />
         </div>

@@ -1,34 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Tile } from '../tile';
 import { createNewGrid } from './helpers';
 import { MAX_COLS, MAX_ROWS } from '../../lib/constants';
 import { runGraphAlgorithm } from '../nav/helpers';
-import { TileType, Algorithm, Generate } from '../../lib/types';
+import { TileType, Generate } from '../../lib/types';
+import { AlgorithmContext } from '../../hooks';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   startTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
   endTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
   gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
-  algorithm: Algorithm;
   isGraphVisualized: boolean;
   curRef: React.MutableRefObject<boolean>;
 }
 
 export function Grid(props: Props) {
-  const {
-    startTileState,
-    endTileState,
-    gridState,
-    algorithm,
-    isGraphVisualized,
-    curRef,
-  } = props;
+  const { startTileState, endTileState, gridState, isGraphVisualized, curRef } = props;
 
   const [grid, setGrid] = gridState;
   const [endTile, setEndTile] = endTileState;
   const [startTile, setStartTile] = startTileState;
   const [generate, setGenerate] = useState(Generate.WALL);
+  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
   const handleMouseDown = (

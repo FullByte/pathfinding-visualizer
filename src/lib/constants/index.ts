@@ -2,7 +2,7 @@
 export const MAX_COLS = 50;
 export const MAX_ROWS = 40;
 export const START_INIT = {
-  row: 1,
+  row: 20,
   col: 1,
   isEnd: false,
   isWall: false,
@@ -13,7 +13,7 @@ export const START_INIT = {
   parent: null,
 };
 export const END_INIT = {
-  row: MAX_ROWS - 2,
+  row: 20,
   col: MAX_COLS - 2,
   isEnd: false,
   isWall: false,

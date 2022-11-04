@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { animatePath } from '../../lib/helpers';
-import { Algorithm, TileType } from '../../lib/types';
+import { Algorithm, ALGOS, TileType } from '../../lib/types';
 import { SLEEP_TIME, EXTENDED_SLEEP_TIME } from '../../lib/constants';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
 import { ThemeToggle } from '../toggle';
 import { Logo, VisualizerToggle } from '.';
+import { DropDown } from '../dropdown';
+import { AlgorithmContext } from '../../hooks';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
   endTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
   startTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
-  algorithmState: [Algorithm, React.Dispatch<React.SetStateAction<Algorithm>>];
   gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
   isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
@@ -21,7 +22,6 @@ export function Nav(props: Props) {
     gridState,
     startTileState,
     endTileState,
-    algorithmState,
     isGraphVisualizedState,
     curRef,
     ...rest
@@ -29,7 +29,7 @@ export function Nav(props: Props) {
   const [endTile, setEndTile] = endTileState;
   const [startTile, setStartTile] = startTileState;
   const [grid, setGrid] = gridState;
-  const [algorithm, setAlgorithm] = algorithmState;
+  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const [isGraphVisualized, setIsGraphVisualized] = isGraphVisualizedState;
   const [disabled, setDisabled] = useState(false);
 
@@ -77,7 +77,8 @@ export function Nav(props: Props) {
           <button className="transition ease-in border-2 border-transparent hover:border-sky-400 text-[15px] font-mono font-bold rounded px-2.5 py-1">
             {algorithm}
           </button>
-          <div className="hidden group-hover:table">
+          <DropDown options={ALGOS} selected={algorithm} setSelected={setAlgorithm} />
+          {/* <div className="hidden group-hover:table">
             <div className="absolute z-10 -ml-[12px] transform px-2 w-screen max-w-[225px] py-1.5">
               <div className="shadow-lg ring-1 ring-black dark:rink-white ring-opacity-5">
                 <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
@@ -88,9 +89,17 @@ export function Nav(props: Props) {
                     Breadth-First Search
                   </button>
                 </div>
+                <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
+                  <button
+                    className="rounded text-[15px] text-left font-manrope tracking-wide	 border-2 border-transparent hover:border-sky-400 p-1.5"
+                    onClick={() => handleAlgorithmChoice(Algorithm.DFS)}
+                  >
+                    Depth-First Search
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <VisualizerToggle
           disabled={disabled}

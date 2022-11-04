@@ -1,5 +1,5 @@
 import { isEqual } from '../../lib/helpers';
-import { bfs } from '../../lib/algorithms/graph';
+import { bfs, dfs } from '../../lib/algorithms/graph';
 import { Algorithm, TileType, GridType } from '../../lib/types';
 import { MAX_ROWS, MAX_COLS, CELL_STYLE } from '../../lib/constants';
 
@@ -16,8 +16,8 @@ export const runGraphAlgorithm = (
     //   return aStar(grid, startTile, endTile);
     case Algorithm.BFS:
       return bfs(grid, startTile, endTile);
-    // case Algorithm.DFS:
-    //   return dfs(grid, startTile, endTile);
+    case Algorithm.DFS:
+      return dfs(grid, startTile, endTile);
     default:
       return bfs(grid, startTile, endTile);
   }
