@@ -1,9 +1,9 @@
 /* eslint-disable no-continue */
 import { isEqual } from '../../helpers';
 import { GridType, TileType } from '../../types';
-import { checkStack, getUnTraversedNeighbors } from '.';
+import { dropFromQueue, getUnTraversedNeighbors } from '.';
 
-export const dfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
+export const dijkstra = (grid: GridType, startTile: TileType, endTile: TileType) => {
   const traversedTiles = [];
   const base = grid[startTile.row][startTile.col];
   base.distance = 0;
@@ -11,7 +11,8 @@ export const dfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
   const untraversedTiles = [base];
 
   while (untraversedTiles.length > 0) {
-    const currentTile = untraversedTiles.pop();
+    untraversedTiles.sort((a, b) => a.distance - b.distance);
+    const currentTile = untraversedTiles.shift();
     if (currentTile) {
       if (currentTile.isWall) continue;
       if (currentTile.distance === Infinity) break;
@@ -20,7 +21,8 @@ export const dfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
       if (isEqual(currentTile, endTile)) break;
       const neighbors = getUnTraversedNeighbors(grid, currentTile);
       for (let i = 0; i < neighbors.length; i += 1) {
-        if (!checkStack(neighbors[i], untraversedTiles)) {
+        if (currentTile.distance + 1 < neighbors[i].distance) {
+          dropFromQueue(neighbors[i], untraversedTiles);
           neighbors[i].distance = currentTile.distance + 1;
           neighbors[i].parent = currentTile;
           untraversedTiles.push(neighbors[i]);
@@ -28,6 +30,7 @@ export const dfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
       }
     }
   }
+
   const path = [];
   let current = grid[endTile.row][endTile.col];
   while (current !== null) {

@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 
-import { animatePath } from '../../lib/helpers';
-import { Algorithm, ALGOS, TileType } from '../../lib/types';
-import { SLEEP_TIME, EXTENDED_SLEEP_TIME } from '../../lib/constants';
-import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
+import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
 import { Logo, VisualizerToggle } from '.';
-import { DropDown } from '../dropdown';
+import { TileType } from '../../lib/types';
 import { AlgorithmContext } from '../../hooks';
+import { animatePath } from '../../lib/helpers';
+import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
+import { SLEEP_TIME, EXTENDED_SLEEP_TIME, ALGORITHMS } from '../../lib/constants';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
@@ -32,10 +32,6 @@ export function Nav(props: Props) {
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const [isGraphVisualized, setIsGraphVisualized] = isGraphVisualizedState;
   const [disabled, setDisabled] = useState(false);
-
-  const handleAlgorithmChoice = (algo: Algorithm) => {
-    setAlgorithm(algo);
-  };
 
   const handleRunVizualizer = () => {
     if (isGraphVisualized) {
@@ -67,45 +63,24 @@ export function Nav(props: Props) {
 
   return (
     <div
-      className="flex items-center justify-center min-h-[60px] border-b shadow-md dark:shadow-gray-600 "
+      className=" flex items-center justify-center min-h-[60px] border-b shadow-md dark:shadow-gray-600 sm:px-[20px] px-[10px]"
       {...rest}
     >
-      <div className="flex h-full items-center w-[1040px] justify-between px-[20px] columns-2">
+      <div className="flex items-center sm:justify-between w-[1000px] ">
         <Logo />
-        <ThemeToggle curRef={curRef} />
-        <div className="relative group">
-          <button className="transition ease-in border-2 border-transparent hover:border-sky-400 text-[15px] font-mono font-bold rounded px-2.5 py-1">
-            {algorithm}
-          </button>
-          <DropDown options={ALGOS} selected={algorithm} setSelected={setAlgorithm} />
-          {/* <div className="hidden group-hover:table">
-            <div className="absolute z-10 -ml-[12px] transform px-2 w-screen max-w-[225px] py-1.5">
-              <div className="shadow-lg ring-1 ring-black dark:rink-white ring-opacity-5">
-                <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
-                  <button
-                    className="rounded text-[15px] text-left font-manrope tracking-wide	 border-2 border-transparent hover:border-sky-400 p-1.5"
-                    onClick={() => handleAlgorithmChoice(Algorithm.BFS)}
-                  >
-                    Breadth-First Search
-                  </button>
-                </div>
-                <div className="relative grid gap-1 bg-white px-2 py-2 rounded dark:bg-slate-900">
-                  <button
-                    className="rounded text-[15px] text-left font-manrope tracking-wide	 border-2 border-transparent hover:border-sky-400 p-1.5"
-                    onClick={() => handleAlgorithmChoice(Algorithm.DFS)}
-                  >
-                    Depth-First Search
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> */}
+        <div className="sm:w-[50%] w-[100%] flex items-center sm:justify-between justify-around">
+          <ThemeToggle curRef={curRef} />
+          <DropDown
+            options={ALGORITHMS}
+            selected={algorithm}
+            setSelected={setAlgorithm}
+          />
+          <VisualizerToggle
+            disabled={disabled}
+            isGraphVisualized={isGraphVisualized}
+            handleRunVizualizer={handleRunVizualizer}
+          />
         </div>
-        <VisualizerToggle
-          disabled={disabled}
-          isGraphVisualized={isGraphVisualized}
-          handleRunVizualizer={handleRunVizualizer}
-        />
       </div>
     </div>
   );

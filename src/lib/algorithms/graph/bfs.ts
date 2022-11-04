@@ -1,6 +1,6 @@
 import { isEqual } from '../../helpers';
 import { GridType, TileType } from '../../types';
-import { MAX_ROWS, MAX_COLS } from '../../constants';
+import { getUnTraversedNeighbors, isInQueue } from '.';
 
 export const bfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
   const traversedTiles: TileType[] = [];
@@ -18,7 +18,7 @@ export const bfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
     traversedTiles.push(tile);
     if (isEqual(tile, endTile)) break;
 
-    const neighbors = getUnTraversedNeighbours(grid, tile);
+    const neighbors = getUnTraversedNeighbors(grid, tile);
     for (let i = 0; i < neighbors.length; i += 1) {
       if (!isInQueue(neighbors[i], unTraversed)) {
         const nei = neighbors[i];
@@ -37,21 +37,4 @@ export const bfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
     tile = tile.parent;
   }
   return { traversedTiles, path };
-};
-
-const isInQueue = (tile: TileType, queue: TileType[]) => {
-  for (let i = 0; i < queue.length; i += 1) {
-    if (isEqual(tile, queue[i])) return true;
-  }
-  return false;
-};
-
-const getUnTraversedNeighbours = (grid: GridType, tile: TileType) => {
-  const { row, col } = tile;
-  const neighbours: TileType[] = [];
-  if (row > 0) neighbours.push(grid[row - 1][col]);
-  if (col > 0) neighbours.push(grid[row][col - 1]);
-  if (row < MAX_ROWS - 1) neighbours.push(grid[row + 1][col]);
-  if (col < MAX_COLS - 1) neighbours.push(grid[row][col + 1]);
-  return neighbours.filter((neighbour) => !neighbour.isTraversed);
 };

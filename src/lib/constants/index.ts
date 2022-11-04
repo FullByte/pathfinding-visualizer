@@ -1,3 +1,5 @@
+import { Algorithm } from '../types';
+
 /* eslint-disable prefer-template */
 export const MAX_COLS = 50;
 export const MAX_ROWS = 40;
@@ -23,6 +25,13 @@ export const END_INIT = {
   isTraversed: false,
   parent: null,
 };
+
+export const ALGORITHMS = [
+  { name: 'Breadth First Search', value: Algorithm.BFS },
+  { name: 'Depth First Search', value: Algorithm.DFS },
+  { name: 'Dijkstra', value: Algorithm.DIJKSTRA },
+  { name: 'A-Star', value: Algorithm.ASTAR },
+];
 
 export const SLEEP_TIME = 8;
 export const EXTENDED_SLEEP_TIME = 30;

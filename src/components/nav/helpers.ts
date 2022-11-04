@@ -1,7 +1,7 @@
 import { isEqual } from '../../lib/helpers';
-import { bfs, dfs } from '../../lib/algorithms/graph';
 import { Algorithm, TileType, GridType } from '../../lib/types';
 import { MAX_ROWS, MAX_COLS, CELL_STYLE } from '../../lib/constants';
+import { aStar, bfs, dfs, dijkstra } from '../../lib/algorithms/graph';
 
 export const runGraphAlgorithm = (
   algorithm: Algorithm,
@@ -10,10 +10,10 @@ export const runGraphAlgorithm = (
   endTile: TileType
 ) => {
   switch (algorithm) {
-    // case Algorithm.DIJKSTRA:
-    //   return dijkstra(grid, startTile, endTile);
-    // case Algorithm.ASTAR:
-    //   return aStar(grid, startTile, endTile);
+    case Algorithm.DIJKSTRA:
+      return dijkstra(grid, startTile, endTile);
+    case Algorithm.ASTAR:
+      return aStar(grid, startTile, endTile);
     case Algorithm.BFS:
       return bfs(grid, startTile, endTile);
     case Algorithm.DFS:

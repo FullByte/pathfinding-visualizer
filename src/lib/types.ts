@@ -20,11 +20,6 @@ export enum Algorithm {
   DFS = 'DFS',
 }
 
-export const ALGOS = [
-  { name: 'Breadth First Search', value: Algorithm.BFS },
-  { name: 'Depth First Search', value: Algorithm.DFS },
-];
-
 export type AlgorithmType = {
   name: string;
   value: Algorithm;
