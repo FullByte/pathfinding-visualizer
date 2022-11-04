@@ -3,33 +3,27 @@ import React, { useContext, useState } from 'react';
 import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
 import { Logo, VisualizerToggle } from '.';
-import { TileType } from '../../lib/types';
-import { AlgorithmContext } from '../../hooks';
 import { animatePath } from '../../lib/helpers';
 import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
 import { SLEEP_TIME, EXTENDED_SLEEP_TIME, ALGORITHMS } from '../../lib/constants';
+import {
+  AlgorithmContext,
+  EndTileContext,
+  GridContext,
+  StartTileContext,
+} from '../../hooks';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
-  endTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
-  startTileState: [TileType, React.Dispatch<React.SetStateAction<TileType>>];
-  gridState: [TileType[][], React.Dispatch<React.SetStateAction<TileType[][]>>];
   isGraphVisualizedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
 
 export function Nav(props: Props) {
-  const {
-    gridState,
-    startTileState,
-    endTileState,
-    isGraphVisualizedState,
-    curRef,
-    ...rest
-  } = props;
-  const [endTile, setEndTile] = endTileState;
-  const [startTile, setStartTile] = startTileState;
-  const [grid, setGrid] = gridState;
+  const { isGraphVisualizedState, curRef, ...rest } = props;
+  const { grid, setGrid } = useContext(GridContext);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
+  const { startTile, setStartTile } = useContext(StartTileContext);
+  const { endTile, setEndTile } = useContext(EndTileContext);
   const [isGraphVisualized, setIsGraphVisualized] = isGraphVisualizedState;
   const [disabled, setDisabled] = useState(false);
 

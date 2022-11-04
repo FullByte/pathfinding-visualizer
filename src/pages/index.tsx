@@ -1,16 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { Nav } from '../components/nav';
 import { Grid } from '../components/grid';
-import { createGrid } from '../lib/helpers';
 import { useTheme } from '../hooks/useTheme';
-import { END_INIT, START_INIT } from '../lib/constants';
 
 export default function Home() {
   const curRef = useRef(false);
   const [isDarkMode] = useTheme();
-  const [endTile, setEndTile] = useState(END_INIT);
-  const [startTile, setStartTile] = useState(START_INIT);
-  const [grid, setGrid] = useState(createGrid(startTile, endTile));
+
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
 
   const flexCLass = `flex flex-col w-full`;
@@ -24,18 +20,9 @@ export default function Home() {
         <div className={flexCLass}>
           <Nav
             curRef={curRef}
-            gridState={[grid, setGrid]}
-            startTileState={[startTile, setStartTile]}
-            endTileState={[endTile, setEndTile]}
             isGraphVisualizedState={[isGraphVisualized, setIsGraphVisualized]}
           />
-          <Grid
-            curRef={curRef}
-            startTileState={[startTile, setStartTile]}
-            endTileState={[endTile, setEndTile]}
-            gridState={[grid, setGrid]}
-            isGraphVisualized={isGraphVisualized}
-          />
+          <Grid curRef={curRef} isGraphVisualized={isGraphVisualized} />
         </div>
       </div>
     </div>
