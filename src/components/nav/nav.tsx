@@ -65,6 +65,7 @@ export function Nav(props: Props) {
         <div className="sm:w-[50%] w-[100%] flex items-center sm:justify-between justify-around">
           <ThemeToggle curRef={curRef} />
           <DropDown
+            disabled={disabled}
             options={ALGORITHMS}
             selected={algorithm}
             setSelected={setAlgorithm}

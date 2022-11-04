@@ -9,15 +9,22 @@ interface Props {
   options: AlgorithmType[];
   selected: Algorithm;
   setSelected: Function;
+  disabled: boolean;
 }
 
 export function DropDown(props: Props) {
-  const { options, selected, setSelected } = props;
+  const { options, selected, setSelected, disabled } = props;
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className={`relative inline-block text-left `}>
       <div>
-        <Menu.Button className="inline-flex w-full justify-center rounded-md  bg-system-grey2 dark:bg-system-grey6 px-4 py-2 text-sm font-medium text-gray-700 dark:text-system-grey2 hover:bg-system-grey3 dark:hover:bg-system-grey5 focus:outline-none ">
+        <Menu.Button
+          className={` bg-system-grey2 dark:bg-system-grey6 text-gray-700 dark:text-system-grey2 ${
+            disabled
+              ? 'cursor-default	pointer-events-none text-gray-400 dark:text-system-grey5'
+              : ''
+          } inline-flex w-full justify-center rounded-md  px-4 py-2 text-sm font-medium  hover:bg-system-grey3 dark:hover:bg-system-grey5 focus:outline-none `}
+        >
           {ALGORITHMS.find((algo) => algo.value === selected)?.name}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>

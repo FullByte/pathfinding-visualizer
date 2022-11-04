@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
@@ -31,18 +32,31 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
-      <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-        <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
-          <StartTileContext.Provider value={{ startTile, setStartTile }}>
-            <EndTileContext.Provider value={{ endTile, setEndTile }}>
-              <GridContext.Provider value={{ grid, setGrid }}>
-                <Component {...pageProps} />
-              </GridContext.Provider>
-            </EndTileContext.Provider>
-          </StartTileContext.Provider>
-        </AlgorithmContext.Provider>
-      </ThemeContext.Provider>
-    </VisualizedContext.Provider>
+    <>
+      <Head>
+        <link
+          rel="shortcut icon"
+          href="https://res.cloudinary.com/dk0r9bcxy/image/upload/v1667602259/portfolio-website/Daco_514152_kjst7m.png"
+        />
+        <title>Pathfinding Visualizer</title>
+        <meta
+          name="description"
+          content="Pathfinding Visualizer made with Next.js, Typescript, & TailwindCSS"
+        />
+      </Head>
+      <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
+        <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+          <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
+            <StartTileContext.Provider value={{ startTile, setStartTile }}>
+              <EndTileContext.Provider value={{ endTile, setEndTile }}>
+                <GridContext.Provider value={{ grid, setGrid }}>
+                  <Component {...pageProps} />
+                </GridContext.Provider>
+              </EndTileContext.Provider>
+            </StartTileContext.Provider>
+          </AlgorithmContext.Provider>
+        </ThemeContext.Provider>
+      </VisualizedContext.Provider>
+    </>
   );
 }
