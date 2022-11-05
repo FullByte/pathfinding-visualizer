@@ -20,9 +20,19 @@ export enum Algorithm {
   DFS = 'DFS',
 }
 
+export enum Maze {
+  BINARY_TREE = 'BINARY_TREE',
+  NONE = 'NONE',
+}
+
 export type AlgorithmType = {
   name: string;
   value: Algorithm;
+};
+
+export type MazeType = {
+  name: string;
+  value: Maze;
 };
 
 export enum Generate {
@@ -30,4 +40,9 @@ export enum Generate {
   WALL = 'WALL',
   START = 'START',
   UNTRAVERSED = 'UNTRAVERSED',
+}
+
+export enum DropDownTypes {
+  ALGORITHM = 'ALGORITHM',
+  MAZE = 'MAZE',
 }

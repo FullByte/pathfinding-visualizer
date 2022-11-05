@@ -11,8 +11,9 @@ import {
   GridContext,
   VisualizedContext,
   StartTileContext,
+  MazeContext,
 } from '../hooks';
-import { Algorithm } from '../lib/types';
+import { Algorithm, Maze } from '../lib/types';
 import { createGrid } from '../lib/helpers';
 import { ThemeContext } from '../hooks/useTheme';
 import { END_INIT, START_INIT } from '../lib/constants';
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [grid, setGrid] = useState(createGrid(startTile, endTile));
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
   const [algorithm, setAlgorithm] = useState<Algorithm>(Algorithm.BFS);
+  const [maze, setMaze] = useState<Maze>(Maze.NONE);
 
   useEffect(() => {
     if (localStorage.getItem('darkMode')) {
@@ -47,13 +49,15 @@ export default function App({ Component, pageProps }: AppProps) {
       <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
         <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
           <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
-            <StartTileContext.Provider value={{ startTile, setStartTile }}>
-              <EndTileContext.Provider value={{ endTile, setEndTile }}>
-                <GridContext.Provider value={{ grid, setGrid }}>
-                  <Component {...pageProps} />
-                </GridContext.Provider>
-              </EndTileContext.Provider>
-            </StartTileContext.Provider>
+            <MazeContext.Provider value={{ maze, setMaze }}>
+              <StartTileContext.Provider value={{ startTile, setStartTile }}>
+                <EndTileContext.Provider value={{ endTile, setEndTile }}>
+                  <GridContext.Provider value={{ grid, setGrid }}>
+                    <Component {...pageProps} />
+                  </GridContext.Provider>
+                </EndTileContext.Provider>
+              </StartTileContext.Provider>
+            </MazeContext.Provider>
           </AlgorithmContext.Provider>
         </ThemeContext.Provider>
       </VisualizedContext.Provider>

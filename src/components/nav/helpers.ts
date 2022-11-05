@@ -1,7 +1,8 @@
 import { isEqual } from '../../lib/helpers';
-import { Algorithm, TileType, GridType } from '../../lib/types';
+import { Algorithm, TileType, GridType, MazeType, Maze } from '../../lib/types';
 import { MAX_ROWS, MAX_COLS, CELL_STYLE } from '../../lib/constants';
 import { aStar, bfs, dfs, dijkstra } from '../../lib/algorithms/graph';
+import { binaryTree } from '../../lib/algorithms/maze';
 
 export const runGraphAlgorithm = (
   algorithm: Algorithm,
@@ -20,6 +21,27 @@ export const runGraphAlgorithm = (
       return dfs(grid, startTile, endTile);
     default:
       return bfs(grid, startTile, endTile);
+  }
+};
+
+export const runMazeAlgorithm = (
+  maze: Maze,
+  grid: GridType,
+  startTile: TileType,
+  endTile: TileType,
+  isDarkMode: boolean,
+  setDisabled: (disabled: boolean) => void
+) => {
+  if (maze === Maze.BINARY_TREE) {
+    binaryTree(grid, startTile, endTile, isDarkMode, setDisabled);
+  } else if (maze === Maze.NONE) {
+    for (let r = 0; r < MAX_ROWS; r += 1) {
+      for (let c = 0; c < MAX_COLS; c += 1) {
+        if (grid[r][c].isWall) {
+          document.getElementById(`${r}-${c}`)!.className = CELL_STYLE;
+        }
+      }
+    }
   }
 };
 
@@ -45,11 +67,11 @@ export const renderRefreshedGrid = (
       const tile = grid[row][col];
       if (!isEqual(startTile, tile) && !isEqual(endTile, tile)) {
         tile.isWall = false;
-        if (tile.row === 39 && tile.col === 0) {
+        if (tile.row === MAX_ROWS - 1 && tile.col === 0) {
           document.getElementById(
             `${tile.row}-${tile.col}`
           )!.className = `${CELL_STYLE} border-b border-l`;
-        } else if (tile.row === 39) {
+        } else if (tile.row === MAX_ROWS - 1) {
           document.getElementById(
             `${tile.row}-${tile.col}`
           )!.className = `${CELL_STYLE} border-b`;

@@ -4,15 +4,31 @@ import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
 import { Logo, VisualizerToggle } from '.';
 import { animatePath } from '../../lib/helpers';
-import { refreshGrid, renderRefreshedGrid, runGraphAlgorithm } from './helpers';
-import { SLEEP_TIME, EXTENDED_SLEEP_TIME, ALGORITHMS } from '../../lib/constants';
+import {
+  cleanGrid,
+  refreshGrid,
+  renderRefreshedGrid,
+  runGraphAlgorithm,
+  runMazeAlgorithm,
+} from './helpers';
+import {
+  SLEEP_TIME,
+  EXTENDED_SLEEP_TIME,
+  ALGORITHMS,
+  MAZES,
+  MAX_COLS,
+  MAX_ROWS,
+} from '../../lib/constants';
 import {
   GridContext,
   EndTileContext,
   AlgorithmContext,
   VisualizedContext,
   StartTileContext,
+  MazeContext,
+  useTheme,
 } from '../../hooks';
+import { DropDownTypes, Maze } from '../../lib/types';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
@@ -20,12 +36,32 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Nav(props: Props) {
   const { curRef, ...rest } = props;
+  const [isDarkMode] = useTheme();
+
   const [disabled, setDisabled] = useState(false);
   const { grid, setGrid } = useContext(GridContext);
   const { endTile } = useContext(EndTileContext);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
+  const { maze, setMaze } = useContext(MazeContext);
   const { startTile } = useContext(StartTileContext);
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
+
+  const handleMakeMaze = (m: Maze) => {
+    if (m === Maze.NONE) {
+      setMaze(m);
+      cleanGrid(grid);
+      renderRefreshedGrid(grid, startTile, endTile);
+      return;
+    }
+    setDisabled(true);
+    cleanGrid(grid);
+    renderRefreshedGrid(grid, startTile, endTile);
+    setMaze(m);
+    runMazeAlgorithm(m, grid, startTile, endTile, isDarkMode, setDisabled);
+    const newGrid = grid.slice();
+    setGrid(newGrid);
+    setIsGraphVisualized(false);
+  };
 
   const handleRunVizualizer = () => {
     if (isGraphVisualized) {
@@ -63,12 +99,20 @@ export function Nav(props: Props) {
       <div className="flex items-center sm:justify-between w-[1000px] ">
         <Logo />
         <div className="sm:w-[50%] w-[100%] flex items-center sm:justify-between justify-around">
-          <ThemeToggle curRef={curRef} />
+          {!disabled ? <ThemeToggle curRef={curRef} /> : <div className="w-[40px]" />}
+          <DropDown
+            disabled={disabled}
+            options={MAZES}
+            selected={maze}
+            setSelected={handleMakeMaze}
+            type={DropDownTypes.MAZE}
+          />
           <DropDown
             disabled={disabled}
             options={ALGORITHMS}
             selected={algorithm}
             setSelected={setAlgorithm}
+            type={DropDownTypes.ALGORITHM}
           />
           <VisualizerToggle
             disabled={disabled}

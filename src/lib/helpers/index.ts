@@ -16,6 +16,11 @@ function checkIfStartOrEndTile(startTile: TileType, endTile: TileType, tile: Til
   return !isEqual(tile, startTile) && !isEqual(tile, endTile);
 }
 
+// Check if two tiles are equal
+export function isRowColEql(row: number, col: number, tile: TileType) {
+  return row === tile.row && col === tile.col;
+}
+
 // Function to sleep the program for a given time
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -26,7 +31,7 @@ export const isEqual = (a: TileType, b: TileType) => a.row === b.row && a.col ==
 export const getRandInt = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min) + min);
 };
 
 // Function that constructs a border

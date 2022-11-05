@@ -1,10 +1,10 @@
-import { Algorithm } from '../types';
+import { Algorithm, Maze } from '../types';
 
 /* eslint-disable prefer-template */
-export const MAX_COLS = 50;
-export const MAX_ROWS = 40;
+export const MAX_COLS = 49;
+export const MAX_ROWS = 39;
 export const START_INIT = {
-  row: 20,
+  row: 1,
   col: 1,
   isEnd: false,
   isWall: false,
@@ -15,7 +15,7 @@ export const START_INIT = {
   parent: null,
 };
 export const END_INIT = {
-  row: 20,
+  row: MAX_ROWS - 2,
   col: MAX_COLS - 2,
   isEnd: false,
   isWall: false,
@@ -31,6 +31,11 @@ export const ALGORITHMS = [
   { name: 'Depth First Search', value: Algorithm.DFS },
   { name: 'Dijkstra', value: Algorithm.DIJKSTRA },
   { name: 'A-Star', value: Algorithm.ASTAR },
+];
+
+export const MAZES = [
+  { name: 'Binary tree', value: Maze.BINARY_TREE },
+  { name: 'No maze', value: Maze.NONE },
 ];
 
 export const SLEEP_TIME = 8;

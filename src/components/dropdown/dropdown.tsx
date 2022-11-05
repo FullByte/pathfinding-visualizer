@@ -2,30 +2,37 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-import { ALGORITHMS } from '../../lib/constants';
-import { Algorithm, AlgorithmType } from '../../lib/types';
+import { ALGORITHMS, MAZES } from '../../lib/constants';
+import { DropDownTypes } from '../../lib/types';
 
 interface Props {
-  options: AlgorithmType[];
-  selected: Algorithm;
+  options: any;
+  selected: any;
   setSelected: Function;
   disabled: boolean;
+  type: DropDownTypes;
 }
 
 export function DropDown(props: Props) {
-  const { options, selected, setSelected, disabled } = props;
+  const { options, selected, setSelected, disabled, type } = props;
+
+  const isAlgo = type === DropDownTypes.ALGORITHM;
 
   return (
     <Menu as="div" className={`relative inline-block text-left `}>
       <div>
         <Menu.Button
-          className={` bg-system-grey2 dark:bg-system-grey6 text-gray-700 dark:text-system-grey2 ${
+          className={` ${
+            isAlgo ? ' min-w-[192px] ' : ' min-w-[130px] '
+          } bg-system-grey2 dark:bg-system-grey6 text-gray-700 dark:text-system-grey2 ${
             disabled
               ? 'cursor-default	pointer-events-none text-gray-400 dark:text-system-grey5'
               : ''
           } inline-flex w-full justify-center rounded-md  px-4 py-2 text-sm font-medium  hover:bg-system-grey3 dark:hover:bg-system-grey5 focus:outline-none `}
         >
-          {ALGORITHMS.find((algo) => algo.value === selected)?.name}
+          {isAlgo
+            ? ALGORITHMS.find((algo) => algo.value === selected)?.name
+            : MAZES.find((maze) => maze.value === selected)?.name}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -41,7 +48,7 @@ export function DropDown(props: Props) {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-system-grey1 dark:bg-system-grey6  shadow-lg ring-nonefocus:outline-none">
           <div className="py-1">
-            {options.map((option) => (
+            {options.map((option: any) => (
               <Menu.Item key={option.value}>
                 <div
                   className={`${
