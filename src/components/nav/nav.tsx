@@ -165,14 +165,13 @@ export function Nav(props: Props) {
             <div className="flex items-start justify-start py-2">
               <p className="min-w-[60px] font-bold"> Step 2: </p>
               <p>
-                {' '}
                 Select a maze algorithm from the maze dropdown or draw your own boundaries
                 by clicking and holding on the tiles
               </p>
             </div>
             <div className="flex items-start justify-start py-2">
               <p className="min-w-[60px] font-bold"> Step 3: </p>
-              <p> Step 3: Click the visualize button to see the algorithm in action</p>
+              <p>Click the play button to see the pathfinding visualizer in action</p>
             </div>
           </div>
           <button className="button px-auto">
@@ -180,7 +179,7 @@ export function Nav(props: Props) {
               target={'_blank'}
               href={'https://github.com/eoin-barr/pathfinding-visualizer'}
             >
-              <BsGithub className="h-6 w-6" />
+              <BsGithub className="h-8 w-8" />
             </Link>
           </button>
         </div>
