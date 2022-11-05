@@ -1,10 +1,8 @@
 # Pathfinding Visualizer
 
-![visualizer](gif/visualizer.gif)
+![visualizer](assets/path_visualizer.gif)
 
-This is a pathfinding visualizer implmented using
-
-I saw [Clement Mihailescu's](https://github.com/clementmihailescu/Pathfinding-Visualizer) pathing visualizer using plain JavaScript and CSS and so I decided to make one using Next.js, TypeScript and Tailwind. This project implements four pathfinding algorithms (Breadth-First Search, Depth-First Search, Dijkstra, and A-Start) and two maze generation algorithms (Binary Tree and Recursive Division). The deployed pathfinding visualizer can be found [here]().
+I saw [Clement Mihailescu's](https://github.com/clementmihailescu/Pathfinding-Visualizer) pathing visualizer using plain JavaScript and CSS and so I decided to make one using Next.js, TypeScript and Tailwind. This project implements four pathfinding algorithms (Breadth-First Search, Depth-First Search, Dijkstra, and A-Star) and two maze generation algorithms (Binary Tree and Recursive Division). The deployed pathfinding visualizer can be found [here](https://pathfinding-visualizer-nu.vercel.app/).
 
 ## Technologies used
 
