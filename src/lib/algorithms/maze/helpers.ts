@@ -7,13 +7,19 @@ import {
   CELL_STYLE,
   STYLE_WALL_DARK,
   STYLE_WALL_LIGHT,
+  SPEEDS,
 } from '../../constants';
 import { getRandInt, isEqual, isRowColEql, sleep } from '../../helpers';
-import { GridType, TileType } from '../../types';
+import { GridType, Speed, TileType } from '../../types';
 import recursiveDivision from './recursiveDivision';
 
-export const makeWall = (startTile: TileType, endTile: TileType, isDarkMode: boolean) => {
-  const DELAY = 5;
+export const makeWall = (
+  startTile: TileType,
+  endTile: TileType,
+  isDarkMode: boolean,
+  speed: Speed
+) => {
+  const DELAY = 6 * SPEEDS.find((s) => s.value === speed)!.multiple - 1;
   for (let row = 0; row < MAX_ROWS; row += 1) {
     setTimeout(() => {
       for (let col = 0; col < MAX_COLS; col += 1) {
@@ -35,20 +41,21 @@ export const destroyWall = async (
   grid: GridType,
   row: number,
   col: number,
-  isR: number
+  isR: number,
+  speed: Speed
 ) => {
   if (isR && grid[row][col + 1]) {
     grid[row][col + 1].isWall = false;
     document.getElementById(`${row}-${col + 1}`)!.className = CELL_STYLE;
-    await sleep(20);
+    await sleep(20 * SPEEDS.find((s) => s.value === speed)!.multiple - 5);
   } else if (grid[row + 1]) {
     grid[row + 1][col].isWall = false;
     document.getElementById(`${row + 1}-${col}`)!.className = CELL_STYLE;
-    await sleep(20);
+    await sleep(20 * SPEEDS.find((s) => s.value === speed)!.multiple - 5);
   } else {
     grid[row][col].isWall = false;
     document.getElementById(`${row}-${col}`)!.className = CELL_STYLE;
-    await sleep(20);
+    await sleep(20 * SPEEDS.find((s) => s.value === speed)!.multiple - 5);
   }
 };
 
@@ -61,7 +68,8 @@ export async function horizontalDivision(
   height: number,
   width: number,
   isDark: boolean,
-  setDisabled: (disabled: boolean) => void
+  setDisabled: (disabled: boolean) => void,
+  speed: Speed
 ) {
   const makeWallAt = row + getRandInt(0, height - 1) * 2 + 1;
   const makePassageAt = col + getRandInt(0, width) * 2;
@@ -77,7 +85,7 @@ export async function horizontalDivision(
         document.getElementById(`${makeWallAt}-${col + i}`)!.className = `${
           isDark ? STYLE_WALL_LIGHT : STYLE_WALL_DARK
         } animate-wall`;
-        await sleep(10);
+        await sleep(10 * SPEEDS.find((s) => s.value === speed)!.multiple - 5);
       }
     }
   }
@@ -91,7 +99,8 @@ export async function horizontalDivision(
     (makeWallAt - row + 1) / 2,
     width,
     isDark,
-    setDisabled
+    setDisabled,
+    speed
   );
   await recursiveDivision(
     grid,
@@ -102,7 +111,8 @@ export async function horizontalDivision(
     height - (makeWallAt - row + 1) / 2,
     width,
     isDark,
-    setDisabled
+    setDisabled,
+    speed
   );
 }
 
@@ -115,7 +125,8 @@ export async function verticalDivision(
   height: number,
   width: number,
   isDark: boolean,
-  setDisabled: (disabled: boolean) => void
+  setDisabled: (disabled: boolean) => void,
+  speed: Speed
 ) {
   const makeWallAt = col + getRandInt(0, width - 1) * 2 + 1;
   const makePassageAt = row + getRandInt(0, height) * 2;
@@ -131,7 +142,7 @@ export async function verticalDivision(
         document.getElementById(`${row + i}-${makeWallAt}`)!.className = `${
           isDark ? STYLE_WALL_LIGHT : STYLE_WALL_DARK
         } animate-wall`;
-        await sleep(10);
+        await sleep(10 * SPEEDS.find((s) => s.value === speed)!.multiple - 5);
       }
     }
   }
@@ -145,7 +156,8 @@ export async function verticalDivision(
     height,
     (makeWallAt - col + 1) / 2,
     isDark,
-    setDisabled
+    setDisabled,
+    speed
   );
   await recursiveDivision(
     grid,
@@ -156,6 +168,7 @@ export async function verticalDivision(
     height,
     width - (makeWallAt - col + 1) / 2,
     isDark,
-    setDisabled
+    setDisabled,
+    speed
   );
 }

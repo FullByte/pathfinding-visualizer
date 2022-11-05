@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createContext } from 'react';
-import { Algorithm, AlgorithmType, GridType, Maze, TileType } from '../lib/types';
+import { Algorithm, AlgorithmType, GridType, Maze, Speed, TileType } from '../lib/types';
 
 interface AlgorithmContextInterface {
   algorithm: Algorithm;
@@ -10,6 +10,11 @@ interface AlgorithmContextInterface {
 interface MazeContextInterface {
   maze: Maze;
   setMaze: (maze: Maze) => void;
+}
+
+interface SpeedContextInterface {
+  speed: Speed;
+  setSpeed: (speed: Speed) => void;
 }
 
 interface StartTileContextInterface {
@@ -35,6 +40,8 @@ interface isGraphVisualizedContextInterface {
 export const AlgorithmContext = createContext({} as AlgorithmContextInterface);
 
 export const MazeContext = createContext({} as MazeContextInterface);
+
+export const SpeedContext = createContext({} as SpeedContextInterface);
 
 export const StartTileContext = createContext({} as StartTileContextInterface);
 

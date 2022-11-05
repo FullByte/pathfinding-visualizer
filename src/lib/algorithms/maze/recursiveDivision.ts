@@ -1,8 +1,6 @@
 /* eslint-disable no-await-in-loop */
+import { GridType, Speed, TileType } from '../../types';
 import { horizontalDivision, verticalDivision } from '.';
-import { STYLE_WALL_DARK, STYLE_WALL_LIGHT } from '../../constants';
-import { getRandInt, isEqual, sleep } from '../../helpers';
-import { GridType, TileType } from '../../types';
 
 export default async function recursiveDivision(
   grid: GridType,
@@ -13,7 +11,8 @@ export default async function recursiveDivision(
   height: number,
   width: number,
   isDark: boolean,
-  setDisabled: (disabled: boolean) => void
+  setDisabled: (disabled: boolean) => void,
+  speed: Speed
 ) {
   if (height <= 1 || width <= 1) {
     return;
@@ -29,7 +28,8 @@ export default async function recursiveDivision(
       height,
       width,
       isDark,
-      setDisabled
+      setDisabled,
+      speed
     );
   } else {
     await verticalDivision(
@@ -41,7 +41,8 @@ export default async function recursiveDivision(
       height,
       width,
       isDark,
-      setDisabled
+      setDisabled,
+      speed
     );
   }
 }

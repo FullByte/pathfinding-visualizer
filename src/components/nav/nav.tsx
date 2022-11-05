@@ -16,8 +16,7 @@ import {
   EXTENDED_SLEEP_TIME,
   ALGORITHMS,
   MAZES,
-  MAX_COLS,
-  MAX_ROWS,
+  SPEEDS,
 } from '../../lib/constants';
 import {
   GridContext,
@@ -27,6 +26,7 @@ import {
   StartTileContext,
   MazeContext,
   useTheme,
+  SpeedContext,
 } from '../../hooks';
 import { DropDownTypes, Maze } from '../../lib/types';
 
@@ -37,13 +37,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export function Nav(props: Props) {
   const { curRef, ...rest } = props;
   const [isDarkMode] = useTheme();
-
-  const [disabled, setDisabled] = useState(false);
-  const { grid, setGrid } = useContext(GridContext);
   const { endTile } = useContext(EndTileContext);
-  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
+  const [disabled, setDisabled] = useState(false);
+  const { speed, setSpeed } = useContext(SpeedContext);
+  const { grid, setGrid } = useContext(GridContext);
   const { maze, setMaze } = useContext(MazeContext);
   const { startTile } = useContext(StartTileContext);
+  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
   const handleMakeMaze = (m: Maze) => {
@@ -57,7 +57,7 @@ export function Nav(props: Props) {
     setDisabled(true);
     cleanGrid(grid);
     renderRefreshedGrid(grid, startTile, endTile);
-    runMazeAlgorithm(m, grid, startTile, endTile, isDarkMode, setDisabled);
+    runMazeAlgorithm(m, grid, startTile, endTile, isDarkMode, setDisabled, speed);
     const newGrid = grid.slice();
     setGrid(newGrid);
     setIsGraphVisualized(false);
@@ -93,13 +93,13 @@ export function Nav(props: Props) {
 
   return (
     <div
-      className=" flex items-center justify-center min-h-[60px] border-b shadow-md dark:shadow-gray-600 sm:px-[20px] px-[10px]"
+      className=" flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-2.5"
       {...rest}
     >
-      <div className="flex items-center sm:justify-between w-[1000px] ">
+      <div className="flex items-center sm:justify-between w-247.5 ">
         <Logo />
-        <div className="lg:w-[50%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
-          {!disabled ? <ThemeToggle curRef={curRef} /> : <div className="w-[40px]" />}
+        <div className="lg:w-[75%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
+          {!disabled ? <ThemeToggle curRef={curRef} /> : <div className="w-11" />}
           <DropDown
             disabled={disabled}
             options={MAZES}
@@ -113,6 +113,13 @@ export function Nav(props: Props) {
             selected={algorithm}
             setSelected={setAlgorithm}
             type={DropDownTypes.ALGORITHM}
+          />
+          <DropDown
+            disabled={disabled}
+            options={SPEEDS}
+            selected={speed}
+            setSelected={setSpeed}
+            type={DropDownTypes.SPEED}
           />
           <VisualizerToggle
             disabled={disabled}

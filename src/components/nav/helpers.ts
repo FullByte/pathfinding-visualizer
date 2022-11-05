@@ -1,6 +1,6 @@
 import { constructBorder, isEqual } from '../../lib/helpers';
-import { Algorithm, TileType, GridType, MazeType, Maze } from '../../lib/types';
-import { MAX_ROWS, MAX_COLS, CELL_STYLE } from '../../lib/constants';
+import { Algorithm, TileType, GridType, MazeType, Maze, Speed } from '../../lib/types';
+import { MAX_ROWS, MAX_COLS, CELL_STYLE, SPEEDS } from '../../lib/constants';
 import { aStar, bfs, dfs, dijkstra } from '../../lib/algorithms/graph';
 import { binaryTree } from '../../lib/algorithms/maze';
 import recursiveDivision from '../../lib/algorithms/maze/recursiveDivision';
@@ -31,10 +31,11 @@ export const runMazeAlgorithm = (
   startTile: TileType,
   endTile: TileType,
   isDarkMode: boolean,
-  setDisabled: (disabled: boolean) => void
+  setDisabled: (disabled: boolean) => void,
+  speed: Speed
 ) => {
   if (maze === Maze.BINARY_TREE) {
-    binaryTree(grid, startTile, endTile, isDarkMode, setDisabled);
+    binaryTree(grid, startTile, endTile, isDarkMode, setDisabled, speed);
   } else if (maze === Maze.RECURSIVE_DIVISION) {
     constructBorder(grid, startTile, endTile, isDarkMode);
     recursiveDivision(
@@ -46,11 +47,12 @@ export const runMazeAlgorithm = (
       (MAX_ROWS - 2 + 1) / 2,
       (MAX_COLS - 2 + 1) / 2,
       isDarkMode,
-      setDisabled
+      setDisabled,
+      speed
     );
     setTimeout(() => {
       setDisabled(false);
-    }, 12000);
+    }, 9000 * SPEEDS.find((s) => s.value === speed)!.multiple);
   } else if (maze === Maze.NONE) {
     for (let r = 0; r < MAX_ROWS; r += 1) {
       for (let c = 0; c < MAX_COLS; c += 1) {

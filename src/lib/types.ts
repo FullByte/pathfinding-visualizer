@@ -36,6 +36,12 @@ export type MazeType = {
   value: Maze;
 };
 
+export type SpeedType = {
+  name: string;
+  value: Speed;
+  multiple: number;
+};
+
 export enum Generate {
   END = 'END',
   WALL = 'WALL',
@@ -46,4 +52,11 @@ export enum Generate {
 export enum DropDownTypes {
   ALGORITHM = 'ALGORITHM',
   MAZE = 'MAZE',
+  SPEED = 'SPEED',
+}
+
+export enum Speed {
+  FAST = 'FAST',
+  MEDIUM = 'MEDIUM',
+  SLOW = 'SLOW',
 }

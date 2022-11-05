@@ -3,7 +3,7 @@
 /* eslint-disable no-await-in-loop */
 import { MAX_COLS, MAX_ROWS } from '../../constants';
 import { getRandInt, isEqual, sleep } from '../../helpers';
-import { GridType, TileType } from '../../types';
+import { GridType, Speed, TileType } from '../../types';
 import { destroyWall, makeWall } from './helpers';
 
 export const binaryTree = async (
@@ -11,9 +11,10 @@ export const binaryTree = async (
   startTile: TileType,
   endTile: TileType,
   isDarkMode: boolean,
-  setDisabled: (disabled: boolean) => void
+  setDisabled: (disabled: boolean) => void,
+  speed: Speed
 ) => {
-  makeWall(startTile, endTile, isDarkMode);
+  makeWall(startTile, endTile, isDarkMode, speed);
   await sleep(MAX_ROWS * MAX_COLS);
 
   for (const row of grid) {
@@ -31,11 +32,11 @@ export const binaryTree = async (
       if (r === MAX_ROWS - 2 && c === MAX_COLS - 2) {
         continue;
       } else if (r === MAX_ROWS - 2) {
-        await destroyWall(grid, r, c, 1);
+        await destroyWall(grid, r, c, 1, speed);
       } else if (c === MAX_COLS - 2) {
-        await destroyWall(grid, r, c, 0);
+        await destroyWall(grid, r, c, 0, speed);
       } else {
-        await destroyWall(grid, r, c, getRandInt(0, 2));
+        await destroyWall(grid, r, c, getRandInt(0, 2), speed);
       }
     }
   }

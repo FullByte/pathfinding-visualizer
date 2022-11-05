@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react';
 
 import { Tile } from '../tile';
 import { createNewGrid } from './helpers';
-import { MAX_COLS, MAX_ROWS } from '../../lib/constants';
-import { runGraphAlgorithm } from '../nav/helpers';
 import { Generate } from '../../lib/types';
+import { runGraphAlgorithm } from '../nav/helpers';
+import { MAX_COLS, MAX_ROWS } from '../../lib/constants';
 import {
-  AlgorithmContext,
-  EndTileContext,
   GridContext,
+  EndTileContext,
   StartTileContext,
+  AlgorithmContext,
   VisualizedContext,
 } from '../../hooks';
 
@@ -19,14 +19,22 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Grid(props: Props) {
   const { curRef } = props;
-
   const { grid, setGrid } = useContext(GridContext);
-  const { endTile, setEndTile } = useContext(EndTileContext);
-  const { startTile, setStartTile } = useContext(StartTileContext);
+  const { algorithm } = useContext(AlgorithmContext);
   const [generate, setGenerate] = useState(Generate.WALL);
-  const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
+  const { endTile, setEndTile } = useContext(EndTileContext);
+  const { isGraphVisualized } = useContext(VisualizedContext);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
-  const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
+  const { startTile, setStartTile } = useContext(StartTileContext);
+
+  const base = `flex items-center flex-col justify-center mt-[40px] border-sky-200`;
+  const rowStyle = `lg:min-h-[${MAX_ROWS * 20}px] md:min-h-[${
+    MAX_ROWS * 15
+  }px] xs:min-h-[${MAX_ROWS * 80}px] min-h-[${MAX_ROWS * 7}px] `;
+  const colStyle = `lg:w-[${MAX_COLS * 20}px] md:w-[${MAX_COLS * 15}px] xs:w-[${
+    MAX_COLS * 8
+  }px] w-[${MAX_COLS * 7}px]`;
+  const classes = `${base} ${rowStyle} ${colStyle}`;
 
   const handleMouseDown = (
     row: number,
@@ -144,15 +152,7 @@ export function Grid(props: Props) {
   };
 
   return (
-    <div
-      className={`flex items-center flex-col justify-center mt-[40px] lg:min-h-[${
-        MAX_ROWS * 20
-      }px] md:min-h-[${MAX_ROWS * 15}px] xs:min-h-[${MAX_ROWS * 80}px] min-h-[${
-        MAX_ROWS * 7
-      }px]  border-sky-200 lg:w-[${MAX_COLS * 20}px] md:w-[${MAX_COLS * 15}px] xs:w-[${
-        MAX_COLS * 8
-      }px] w-[${MAX_COLS * 7}px]`}
-    >
+    <div className={classes}>
       {grid.map((r, rowIdx) => (
         <div key={rowIdx} className="flex">
           {r.map((tile, tileIdx) => {

@@ -6,26 +6,28 @@ import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
 import {
-  AlgorithmContext,
-  EndTileContext,
   GridContext,
-  VisualizedContext,
-  StartTileContext,
   MazeContext,
+  SpeedContext,
+  EndTileContext,
+  AlgorithmContext,
+  StartTileContext,
+  VisualizedContext,
 } from '../hooks';
-import { Algorithm, Maze } from '../lib/types';
+import { Algorithm, Maze, Speed } from '../lib/types';
 import { createGrid } from '../lib/helpers';
 import { ThemeContext } from '../hooks/useTheme';
 import { END_INIT, START_INIT } from '../lib/constants';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [endTile, setEndTile] = useState(END_INIT);
+  const [maze, setMaze] = useState<Maze>(Maze.NONE);
+  const [speed, setSpeed] = useState<Speed>(Speed.FAST);
   const [startTile, setStartTile] = useState(START_INIT);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [grid, setGrid] = useState(createGrid(startTile, endTile));
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
   const [algorithm, setAlgorithm] = useState<Algorithm>(Algorithm.BFS);
-  const [maze, setMaze] = useState<Maze>(Maze.NONE);
 
   useEffect(() => {
     if (localStorage.getItem('darkMode')) {
@@ -43,20 +45,22 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Pathfinding Visualizer</title>
         <meta
           name="description"
-          content="Pathfinding Visualizer made with Next.js, Typescript, & TailwindCSS"
+          content="Pathfinding Visualizer built with Next.js, Typescript, & TailwindCSS"
         />
       </Head>
       <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
         <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
           <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
             <MazeContext.Provider value={{ maze, setMaze }}>
-              <StartTileContext.Provider value={{ startTile, setStartTile }}>
-                <EndTileContext.Provider value={{ endTile, setEndTile }}>
-                  <GridContext.Provider value={{ grid, setGrid }}>
-                    <Component {...pageProps} />
-                  </GridContext.Provider>
-                </EndTileContext.Provider>
-              </StartTileContext.Provider>
+              <SpeedContext.Provider value={{ speed, setSpeed }}>
+                <StartTileContext.Provider value={{ startTile, setStartTile }}>
+                  <EndTileContext.Provider value={{ endTile, setEndTile }}>
+                    <GridContext.Provider value={{ grid, setGrid }}>
+                      <Component {...pageProps} />
+                    </GridContext.Provider>
+                  </EndTileContext.Provider>
+                </StartTileContext.Provider>
+              </SpeedContext.Provider>
             </MazeContext.Provider>
           </AlgorithmContext.Provider>
         </ThemeContext.Provider>

@@ -1,4 +1,4 @@
-import { Algorithm, Maze } from '../types';
+import { Algorithm, Maze, Speed } from '../types';
 
 /* eslint-disable prefer-template */
 export const MAX_COLS = 49;
@@ -34,9 +34,15 @@ export const ALGORITHMS = [
 ];
 
 export const MAZES = [
-  { name: 'Binary Tree', value: Maze.BINARY_TREE },
   { name: 'No Maze', value: Maze.NONE },
+  { name: 'Binary Tree', value: Maze.BINARY_TREE },
   { name: 'Recursive Division', value: Maze.RECURSIVE_DIVISION },
+];
+
+export const SPEEDS = [
+  { name: 'Slow', value: Speed.SLOW, multiple: 2 },
+  { name: 'Medium', value: Speed.MEDIUM, multiple: 1 },
+  { name: 'Fast', value: Speed.FAST, multiple: 0.5 },
 ];
 
 export const SLEEP_TIME = 8;

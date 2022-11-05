@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-import { ALGORITHMS, MAZES } from '../../lib/constants';
+import { ALGORITHMS, MAZES, SPEEDS } from '../../lib/constants';
 import { DropDownTypes } from '../../lib/types';
 
 interface Props {
@@ -17,13 +17,15 @@ export function DropDown(props: Props) {
   const { options, selected, setSelected, disabled, type } = props;
 
   const isAlgo = type === DropDownTypes.ALGORITHM;
+  const isMaze = type === DropDownTypes.MAZE;
+  // const isSpeed = type === DropDownTypes.SPEED;
 
   return (
-    <Menu as="div" className={`relative inline-block text-left `}>
+    <Menu as="div" className={`relative inline-block text-left`}>
       <div>
         <Menu.Button
           className={` ${
-            isAlgo ? ' min-w-[192px] ' : ' min-w-[175px] '
+            isAlgo ? ' min-w-[192px] ' : isMaze ? ' min-w-[175px] ' : ' min-w-[110px] '
           } bg-system-grey2 dark:bg-system-grey6 text-gray-700 dark:text-system-grey2 ${
             disabled
               ? 'cursor-default	pointer-events-none text-gray-400 dark:text-system-grey5'
@@ -32,7 +34,9 @@ export function DropDown(props: Props) {
         >
           {isAlgo
             ? ALGORITHMS.find((algo) => algo.value === selected)?.name
-            : MAZES.find((maze) => maze.value === selected)?.name}
+            : isMaze
+            ? MAZES.find((maze) => maze.value === selected)?.name
+            : SPEEDS.find((speed) => speed.value === selected)?.name}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
