@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { BsFillQuestionCircleFill, BsGithub } from 'react-icons/bs';
 
+import Link from 'next/link';
 import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
 import { Logo, VisualizerToggle } from '.';
@@ -29,6 +31,7 @@ import {
   SpeedContext,
 } from '../../hooks';
 import { DropDownTypes, Maze } from '../../lib/types';
+import { Modal } from '../modal';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
@@ -37,6 +40,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export function Nav(props: Props) {
   const { curRef, ...rest } = props;
   const [isDarkMode] = useTheme();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { endTile } = useContext(EndTileContext);
   const [disabled, setDisabled] = useState(false);
   const { grid, setGrid } = useContext(GridContext);
@@ -45,6 +49,10 @@ export function Nav(props: Props) {
   const { speed, setSpeed } = useContext(SpeedContext);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
 
   const handleMakeMaze = (m: Maze) => {
     if (m === Maze.NONE) {
@@ -90,6 +98,11 @@ export function Nav(props: Props) {
       curRef.current = false;
     }, (SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60)) * SPEEDS.find((s) => s.value === speed)!.multiple);
   };
+  const classes = `${
+    isDarkMode
+      ? 'bg-system-grey6 text-system-grey2'
+      : 'bg-system-grey2 text-system-grey6 '
+  }   inline-block align-bottom rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-screen md:w-1/2 max-w-130 sm:p-6 `;
 
   return (
     <div
@@ -98,8 +111,21 @@ export function Nav(props: Props) {
     >
       <div className="flex items-center sm:justify-between w-247.5 ">
         <Logo />
+
         <div className="lg:w-[75%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
-          {!disabled ? <ThemeToggle curRef={curRef} /> : <div className="w-11" />}
+          {!disabled ? (
+            <div className="flex items-center justify-center">
+              <div className="pr-3">
+                <BsFillQuestionCircleFill
+                  onClick={() => setModalOpen(true)}
+                  className="h-6 w-6 dark:text-system-grey5 text-system-grey3 dark:hover:text-system-grey4 hover:text-system-grey4 cursor-pointer"
+                />
+              </div>
+              <ThemeToggle curRef={curRef} />
+            </div>
+          ) : (
+            <div className="w-11" />
+          )}
           <DropDown
             disabled={disabled}
             options={MAZES}
@@ -128,6 +154,37 @@ export function Nav(props: Props) {
           />
         </div>
       </div>
+      <Modal openModal={modalOpen} handleClose={handleClose}>
+        <div className={classes}>
+          <div className="text-4xl pb-4">Pathfinding Visualizer</div>
+          <div className="text-left flex flex-col items-start justify-start">
+            <div className="flex items-start justify-start py-2">
+              <p className="min-w-[60px] font-bold"> Step 1: </p>
+              <p> Select an pathfinding algorithm from the pathfinding dropdown</p>
+            </div>
+            <div className="flex items-start justify-start py-2">
+              <p className="min-w-[60px] font-bold"> Step 2: </p>
+              <p>
+                {' '}
+                Select a maze algorithm from the maze dropdown or draw your own boundaries
+                by clicking and holding on the tiles
+              </p>
+            </div>
+            <div className="flex items-start justify-start py-2">
+              <p className="min-w-[60px] font-bold"> Step 3: </p>
+              <p> Step 3: Click the visualize button to see the algorithm in action</p>
+            </div>
+          </div>
+          <button className="button px-auto">
+            <Link
+              target={'_blank'}
+              href={'https://github.com/eoin-barr/pathfinding-visualizer'}
+            >
+              <BsGithub className="h-6 w-6" />
+            </Link>
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }
