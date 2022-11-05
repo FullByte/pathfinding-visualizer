@@ -39,10 +39,10 @@ export function Nav(props: Props) {
   const [isDarkMode] = useTheme();
   const { endTile } = useContext(EndTileContext);
   const [disabled, setDisabled] = useState(false);
-  const { speed, setSpeed } = useContext(SpeedContext);
   const { grid, setGrid } = useContext(GridContext);
   const { maze, setMaze } = useContext(MazeContext);
   const { startTile } = useContext(StartTileContext);
+  const { speed, setSpeed } = useContext(SpeedContext);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
@@ -79,7 +79,7 @@ export function Nav(props: Props) {
       endTile
     );
 
-    animatePath(traversedTiles, path, startTile, endTile);
+    animatePath(traversedTiles, path, startTile, endTile, speed);
     setDisabled(true);
     curRef.current = true;
     setTimeout(() => {
@@ -88,7 +88,7 @@ export function Nav(props: Props) {
       setIsGraphVisualized(true);
       setDisabled(false);
       curRef.current = false;
-    }, SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60));
+    }, (SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60)) * SPEEDS.find((s) => s.value === speed)!.multiple);
   };
 
   return (

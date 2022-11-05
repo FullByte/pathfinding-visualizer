@@ -291,7 +291,7 @@ module.exports = {
         },
       },
       animation: {
-        traversed: "traversed 1.5s cubic-bezier(0, 0, 0.2, 1)",
+        traversed: "traversed 0.5s cubic-bezier(0, 0, 0.2, 1)",
         path: "path 1.5s cubic-bezier(0, 0, 0.2, 1)",
         wall: "wall 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       },

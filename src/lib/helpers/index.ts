@@ -8,8 +8,9 @@ import {
   STYLE_TRAVERSED,
   STYLE_PATH,
   EXTENDED_SLEEP_TIME,
+  SPEEDS,
 } from '../constants';
-import { GridType, TileType } from '../types';
+import { GridType, Speed, TileType } from '../types';
 
 // Function to check if tile is the start or end tile
 function checkIfStartOrEndTile(startTile: TileType, endTile: TileType, tile: TileType) {
@@ -74,7 +75,8 @@ export const animatePath = (
   traversedTiles: TileType[],
   path: TileType[],
   startTile: TileType,
-  endTile: TileType
+  endTile: TileType,
+  speed: Speed
 ) => {
   for (let i = 0; i < traversedTiles.length; i += 1) {
     setTimeout(() => {
@@ -84,7 +86,7 @@ export const animatePath = (
           `${tile.row}-${tile.col}`
         )!.className = `${STYLE_TRAVERSED} animate-traversed`;
       }
-    }, SLEEP_TIME * i);
+    }, SLEEP_TIME * i * SPEEDS.find((s) => s.value === speed)!.multiple);
   }
 
   setTimeout(() => {
@@ -96,9 +98,9 @@ export const animatePath = (
             `${tile.row}-${tile.col}`
           )!.className = `${STYLE_PATH} animate-path`;
         }
-      }, EXTENDED_SLEEP_TIME * i);
+      }, EXTENDED_SLEEP_TIME * i * SPEEDS.find((s) => s.value === speed)!.multiple);
     }
-  }, SLEEP_TIME * traversedTiles.length);
+  }, SLEEP_TIME * traversedTiles.length * SPEEDS.find((s) => s.value === speed)!.multiple);
 };
 
 // Function to create a grid
