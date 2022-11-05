@@ -53,9 +53,7 @@ export async function constructBorder(
 
   for (let i = 0; i < 4; i += 1) {
     while (row >= 0 && row <= MAX_ROWS - 1 && col >= 0 && col <= MAX_COLS - 1) {
-      const isStartOrEndTile =
-        !isEqual(grid[row][col], startTile) && !isEqual(grid[row][col], endTile);
-      if (isStartOrEndTile) {
+      if (!isEqual(grid[row][col], startTile) && !isEqual(grid[row][col], endTile)) {
         grid[row][col].isWall = true;
         document.getElementById(`${row}-${col}`)!.className = `${
           isDark ? STYLE_WALL_LIGHT : STYLE_WALL_DARK

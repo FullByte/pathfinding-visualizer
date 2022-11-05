@@ -22,6 +22,7 @@ export enum Algorithm {
 
 export enum Maze {
   BINARY_TREE = 'BINARY_TREE',
+  RECURSIVE_DIVISION = 'RECURSIVE_DIVISION',
   NONE = 'NONE',
 }
 

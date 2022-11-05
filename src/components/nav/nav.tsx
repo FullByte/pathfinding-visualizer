@@ -53,10 +53,10 @@ export function Nav(props: Props) {
       renderRefreshedGrid(grid, startTile, endTile);
       return;
     }
+    setMaze(m);
     setDisabled(true);
     cleanGrid(grid);
     renderRefreshedGrid(grid, startTile, endTile);
-    setMaze(m);
     runMazeAlgorithm(m, grid, startTile, endTile, isDarkMode, setDisabled);
     const newGrid = grid.slice();
     setGrid(newGrid);

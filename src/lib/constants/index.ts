@@ -36,6 +36,7 @@ export const ALGORITHMS = [
 export const MAZES = [
   { name: 'Binary tree', value: Maze.BINARY_TREE },
   { name: 'No maze', value: Maze.NONE },
+  { name: 'Recursive division', value: Maze.RECURSIVE_DIVISION },
 ];
 
 export const SLEEP_TIME = 8;

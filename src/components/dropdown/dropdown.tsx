@@ -23,7 +23,7 @@ export function DropDown(props: Props) {
       <div>
         <Menu.Button
           className={` ${
-            isAlgo ? ' min-w-[192px] ' : ' min-w-[130px] '
+            isAlgo ? ' min-w-[192px] ' : ' min-w-[175px] '
           } bg-system-grey2 dark:bg-system-grey6 text-gray-700 dark:text-system-grey2 ${
             disabled
               ? 'cursor-default	pointer-events-none text-gray-400 dark:text-system-grey5'
