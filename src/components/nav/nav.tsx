@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { BsFillQuestionCircleFill, BsGithub } from 'react-icons/bs';
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
-import Link from 'next/link';
 import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
-import { Logo, VisualizerToggle } from '.';
+import { InfoModal, Logo, VisualizerToggle } from '.';
 import { animatePath } from '../../lib/helpers';
 import {
   cleanGrid,
@@ -31,7 +30,6 @@ import {
   SpeedContext,
 } from '../../hooks';
 import { DropDownTypes, Maze } from '../../lib/types';
-import { Modal } from '../modal';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   curRef: React.MutableRefObject<boolean>;
@@ -98,11 +96,6 @@ export function Nav(props: Props) {
       curRef.current = false;
     }, (SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60)) * SPEEDS.find((s) => s.value === speed)!.multiple);
   };
-  const classes = `${
-    isDarkMode
-      ? 'bg-system-grey6 text-system-grey2'
-      : 'bg-system-grey2 text-system-grey6 '
-  }   inline-block align-bottom rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-screen md:w-1/2 max-w-130 sm:p-6 `;
 
   return (
     <div
@@ -118,7 +111,7 @@ export function Nav(props: Props) {
               <div className="pr-3">
                 <BsFillQuestionCircleFill
                   onClick={() => setModalOpen(true)}
-                  className="h-6 w-6 dark:text-system-grey5 text-system-grey3 dark:hover:text-system-grey4 hover:text-system-grey4 cursor-pointer"
+                  className="h-6 w-6 dark:text-system-grey4 text-system-grey3 dark:hover:text-system-grey5 hover:text-system-grey4 cursor-pointer"
                 />
               </div>
               <ThemeToggle curRef={curRef} />
@@ -154,36 +147,7 @@ export function Nav(props: Props) {
           />
         </div>
       </div>
-      <Modal openModal={modalOpen} handleClose={handleClose}>
-        <div className={classes}>
-          <div className="text-4xl pb-4">Pathfinding Visualizer</div>
-          <div className="text-left flex flex-col items-start justify-start">
-            <div className="flex items-start justify-start py-2">
-              <p className="min-w-[60px] font-bold"> Step 1: </p>
-              <p> Select an pathfinding algorithm from the pathfinding dropdown</p>
-            </div>
-            <div className="flex items-start justify-start py-2">
-              <p className="min-w-[60px] font-bold"> Step 2: </p>
-              <p>
-                Select a maze algorithm from the maze dropdown or draw your own boundaries
-                by clicking and holding on the tiles
-              </p>
-            </div>
-            <div className="flex items-start justify-start py-2">
-              <p className="min-w-[60px] font-bold"> Step 3: </p>
-              <p>Click the play button to see the pathfinding visualizer in action</p>
-            </div>
-          </div>
-          <button className="button px-auto">
-            <Link
-              target={'_blank'}
-              href={'https://github.com/eoin-barr/pathfinding-visualizer'}
-            >
-              <BsGithub className="h-8 w-8" />
-            </Link>
-          </button>
-        </div>
-      </Modal>
+      <InfoModal modalOpen={modalOpen} handleClose={handleClose} />
     </div>
   );
 }
