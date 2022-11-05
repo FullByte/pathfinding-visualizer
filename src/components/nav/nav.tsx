@@ -98,7 +98,7 @@ export function Nav(props: Props) {
     >
       <div className="flex items-center sm:justify-between w-[1000px] ">
         <Logo />
-        <div className="sm:w-[50%] w-[100%] flex items-center sm:justify-between justify-around">
+        <div className="lg:w-[50%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
           {!disabled ? <ThemeToggle curRef={curRef} /> : <div className="w-[40px]" />}
           <DropDown
             disabled={disabled}
