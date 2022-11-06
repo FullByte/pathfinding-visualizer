@@ -13,7 +13,7 @@ export function HNBadge() {
       <div className="mx-auto mt-10 flex items-start justify-start border border-[4px] text-primary-orange border-primary-orange p-1 rounded-lg w-[250px]">
         <Image
           alt={'YC logo'}
-          src={`https://res.cloudinary.com/dk0r9bcxy/image/upload/v1667742980/portfolio-website/yc_zydcpy.png`}
+          src={`https://res.cloudinary.com/dk0r9bcxy/image/upload/v1667744274/portfolio-website/hn2_p8wnds.webp`}
           height={45}
           width={45}
           className="rounded-lg"
