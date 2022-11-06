@@ -20,12 +20,11 @@ export const aStar = (grid: GridType, startTile: TileType, endTile: TileType) =>
 
   while (untraversedTiles.length > 0) {
     untraversedTiles.sort((a, b) => {
-      if (functionCost[a.row][a.col] < functionCost[b.row][b.col]) {
-        return (
-          (a.row - endTile.row) ** 2 +
-          (a.col - endTile.col) ** 2 -
-          ((b.row - endTile.row) ** 2 + (b.col - endTile.col) ** 2)
-        );
+      if (functionCost[a.row][a.col] === functionCost[b.row][b.col]) {
+        // In a tie, choose the path which has made the most progress
+        // so far, i.e. the one with the shortest heuristic distance
+        // remaining.
+        return b.distance - a.distance;
       }
       return functionCost[a.row][a.col] - functionCost[b.row][b.col];
     });
