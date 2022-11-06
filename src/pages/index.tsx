@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Grid } from '../components/grid';
 import { useTheme } from '../hooks/useTheme';
+import { HNBadge } from '../components/badge';
 import { Nav, InfoModal } from '../components/nav';
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
         <div className={flexCLass}>
           <Nav curRef={curRef} />
           <Grid curRef={curRef} />
+          <HNBadge />
         </div>
       </div>
       <InfoModal modalOpen={openModal} handleClose={handleClose} />

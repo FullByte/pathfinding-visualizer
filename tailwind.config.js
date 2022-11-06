@@ -22,6 +22,7 @@ module.exports = {
           yellow: "#F5C237",
           red: "#E13251",
           purple: "#884FF2",
+          orange: "rgb(251, 101, 30)",
         },
         system: {
           grey1: "#F8F8F8",
