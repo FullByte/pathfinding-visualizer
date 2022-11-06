@@ -36,13 +36,16 @@ export function Grid(props: Props) {
   }px] w-[${MAX_COLS * 7}px]`;
   const classes = `${base} ${rowStyle} ${colStyle}`;
 
+  const checkIfStartOrEnd = (row: number, col: number) =>
+    (row === 1 && col === 1) || (row === MAX_ROWS - 2 && col === MAX_COLS - 2);
+
   const handleMouseDown = (
     row: number,
     col: number,
     isStart: boolean,
     isEnd: boolean
   ) => {
-    if (curRef.current) return;
+    if (curRef.current || checkIfStartOrEnd(row, col)) return;
 
     setIsMouseDown(true);
     if (isStart) {
@@ -57,7 +60,7 @@ export function Grid(props: Props) {
   };
 
   const handleMouseUp = (row: number, col: number) => {
-    if (curRef.current) return;
+    if (curRef.current || checkIfStartOrEnd(row, col)) return;
 
     if (generate !== Generate.WALL) {
       if (!isGraphVisualized) {
@@ -98,7 +101,7 @@ export function Grid(props: Props) {
   };
 
   const handleMouseEnter = (row: number, col: number) => {
-    if (curRef.current) return;
+    if (curRef.current || checkIfStartOrEnd(row, col)) return;
     if (isMouseDown) {
       const newGrid = createNewGrid(grid, row, col, generate, isGraphVisualized);
       if (isGraphVisualized) {
@@ -137,7 +140,7 @@ export function Grid(props: Props) {
   };
 
   const handleMouseOut = (row: number, col: number) => {
-    if (curRef.current) return;
+    if (curRef.current || checkIfStartOrEnd(row, col)) return;
 
     if (generate !== Generate.WALL) {
       const newGrid = createNewGrid(
