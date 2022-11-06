@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import React, { useContext, useState } from 'react';
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { BsFillQuestionCircleFill, BsGithub } from 'react-icons/bs';
 
 import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
@@ -47,6 +48,9 @@ export function Nav(props: Props) {
   const { speed, setSpeed } = useContext(SpeedContext);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
+
+  const mainStyle = `flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-2.5`;
+  const iconStyle = `h-6 w-6 dark:text-system-grey3 text-system-grey3 dark:hover:text-system-grey4 hover:text-system-grey4 cursor-pointer`;
 
   const handleClose = () => {
     setModalOpen(false);
@@ -98,20 +102,24 @@ export function Nav(props: Props) {
   };
 
   return (
-    <div
-      className=" flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-2.5"
-      {...rest}
-    >
+    <div className={mainStyle} {...rest}>
       <div className="flex items-center sm:justify-between w-247.5 ">
         <Logo />
-
-        <div className="lg:w-[75%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
+        <div className="lg:w-[85%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
           {!disabled ? (
             <div className="flex items-center justify-center">
               <div className="pr-3">
+                <Link
+                  target={'_blank'}
+                  href={`https://github.com/eoin-barr/pathfinding-visualizer`}
+                >
+                  <BsGithub className={iconStyle} />
+                </Link>
+              </div>
+              <div className="pr-3">
                 <BsFillQuestionCircleFill
                   onClick={() => setModalOpen(true)}
-                  className="h-6 w-6 dark:text-system-grey4 text-system-grey3 dark:hover:text-system-grey5 hover:text-system-grey4 cursor-pointer"
+                  className={iconStyle}
                 />
               </div>
               <ThemeToggle curRef={curRef} />
