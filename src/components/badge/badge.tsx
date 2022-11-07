@@ -24,7 +24,7 @@ export function HNBadge() {
         </div>
         <div className="flex flex-col items-center">
           <TiArrowSortedUp className="mb-[-2px] h-6 w-6" />
-          <p>253</p>
+          <p>263</p>
         </div>
       </div>
     </Link>
