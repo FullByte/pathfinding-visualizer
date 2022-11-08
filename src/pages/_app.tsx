@@ -15,9 +15,9 @@ import {
   StartTileContext,
   VisualizedContext,
 } from '../hooks';
-import { Algorithm, Maze, Speed } from '../lib/types';
 import { createGrid } from '../lib/helpers';
 import { ThemeContext } from '../hooks/useTheme';
+import { Algorithm, Maze, Speed } from '../lib/types';
 import { END_INIT, START_INIT } from '../lib/constants';
 
 export default function App({ Component, pageProps }: AppProps) {

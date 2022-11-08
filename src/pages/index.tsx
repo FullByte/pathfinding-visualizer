@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Grid } from '../components/grid';
 import { useTheme } from '../hooks/useTheme';
 import { HNBadge } from '../components/badge';
+import { Footer } from '../components/footer';
 import { Nav, InfoModal } from '../components/nav';
 
 export default function Home() {
@@ -39,6 +40,7 @@ export default function Home() {
           <Grid curRef={curRef} />
           <HNBadge />
         </div>
+        <Footer />
       </div>
       <InfoModal modalOpen={openModal} handleClose={handleClose} />
     </div>

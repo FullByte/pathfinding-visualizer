@@ -1,34 +1,33 @@
-import Link from 'next/link';
 import React, { useContext, useState } from 'react';
-import { BsFillQuestionCircleFill, BsGithub } from 'react-icons/bs';
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
-import { InfoModal, Logo, VisualizerToggle } from '.';
 import { animatePath } from '../../lib/helpers';
+import { InfoModal, Logo, VisualizerToggle, UserMazes } from '.';
 import {
   cleanGrid,
   refreshGrid,
-  renderRefreshedGrid,
-  runGraphAlgorithm,
   runMazeAlgorithm,
+  runGraphAlgorithm,
+  renderRefreshedGrid,
 } from './helpers';
 import {
-  SLEEP_TIME,
-  EXTENDED_SLEEP_TIME,
-  ALGORITHMS,
   MAZES,
   SPEEDS,
+  SLEEP_TIME,
+  ALGORITHMS,
+  EXTENDED_SLEEP_TIME,
 } from '../../lib/constants';
 import {
+  useTheme,
+  MazeContext,
   GridContext,
+  SpeedContext,
   EndTileContext,
   AlgorithmContext,
-  VisualizedContext,
   StartTileContext,
-  MazeContext,
-  useTheme,
-  SpeedContext,
+  VisualizedContext,
 } from '../../hooks';
 import { DropDownTypes, Maze } from '../../lib/types';
 
@@ -39,17 +38,17 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export function Nav(props: Props) {
   const { curRef, ...rest } = props;
   const [isDarkMode] = useTheme();
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { endTile } = useContext(EndTileContext);
   const [disabled, setDisabled] = useState(false);
   const { grid, setGrid } = useContext(GridContext);
   const { maze, setMaze } = useContext(MazeContext);
   const { startTile } = useContext(StartTileContext);
   const { speed, setSpeed } = useContext(SpeedContext);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
-  const mainStyle = `flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-2.5`;
+  const mainStyle = `flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-0`;
   const iconStyle = `h-6 w-6 dark:text-system-grey3 text-system-grey3 dark:hover:text-system-grey4 hover:text-system-grey4 cursor-pointer`;
 
   const handleClose = () => {
@@ -105,17 +104,9 @@ export function Nav(props: Props) {
     <div className={mainStyle} {...rest}>
       <div className="flex items-center sm:justify-between w-247.5 ">
         <Logo />
-        <div className="lg:w-[85%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-4 lg:py-0 py-4">
+        <div className="lg:w-[85%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-3 lg:py-0 py-4">
           {!disabled ? (
             <div className="flex items-center justify-center">
-              <div className="pr-3">
-                <Link
-                  target={'_blank'}
-                  href={`https://github.com/eoin-barr/pathfinding-visualizer`}
-                >
-                  <BsGithub className={iconStyle} />
-                </Link>
-              </div>
               <div className="pr-3">
                 <BsFillQuestionCircleFill
                   onClick={() => setModalOpen(true)}
@@ -127,27 +118,32 @@ export function Nav(props: Props) {
           ) : (
             <div className="w-11" />
           )}
-          <DropDown
-            disabled={disabled}
-            options={MAZES}
-            selected={maze}
-            setSelected={handleMakeMaze}
-            type={DropDownTypes.MAZE}
-          />
-          <DropDown
-            disabled={disabled}
-            options={ALGORITHMS}
-            selected={algorithm}
-            setSelected={setAlgorithm}
-            type={DropDownTypes.ALGORITHM}
-          />
-          <DropDown
-            disabled={disabled}
-            options={SPEEDS}
-            selected={speed}
-            setSelected={setSpeed}
-            type={DropDownTypes.SPEED}
-          />
+          <div className="flex flex-col items-start lg:justify-between justify-center lg:py-3  lg:space-y-2 space-y-3">
+            <UserMazes disabled={disabled} />
+            <DropDown
+              disabled={disabled}
+              options={MAZES}
+              selected={maze}
+              setSelected={handleMakeMaze}
+              type={DropDownTypes.MAZE}
+            />
+          </div>
+          <div className="flex flex-col items-start lg:justify-between justify-center lg:py-3   lg:space-y-2 space-y-3">
+            <DropDown
+              disabled={disabled}
+              options={ALGORITHMS}
+              selected={algorithm}
+              setSelected={setAlgorithm}
+              type={DropDownTypes.ALGORITHM}
+            />
+            <DropDown
+              disabled={disabled}
+              options={SPEEDS}
+              selected={speed}
+              setSelected={setSpeed}
+              type={DropDownTypes.SPEED}
+            />
+          </div>
           <VisualizerToggle
             disabled={disabled}
             isGraphVisualized={isGraphVisualized}
