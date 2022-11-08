@@ -16,7 +16,6 @@ export default function Home() {
   const subClass = `transition duration-200 bg-system-grey1 dark:bg-system-grey7 text-system-grey6 dark:text-system-grey2 grid grid-cols-1  min-h-screen tracking-wide`;
 
   useEffect(() => {
-    console.log('here');
     const checkIntro = async () => {
       const intro = await localStorage.getItem('intro');
       if (!intro) {

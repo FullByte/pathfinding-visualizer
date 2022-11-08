@@ -50,7 +50,6 @@ export function UserMazes(props: Props) {
       return;
     }
     if (user) {
-      console.log('user', user);
       setIsAuthenticated(true);
     }
   };
