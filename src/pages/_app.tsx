@@ -6,6 +6,7 @@ import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
 import {
+  AuthContext,
   GridContext,
   MazeContext,
   SpeedContext,
@@ -28,6 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [grid, setGrid] = useState(createGrid(startTile, endTile));
   const [isGraphVisualized, setIsGraphVisualized] = useState(false);
   const [algorithm, setAlgorithm] = useState<Algorithm>(Algorithm.BFS);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     if (localStorage.getItem('darkMode')) {
@@ -48,23 +50,25 @@ export default function App({ Component, pageProps }: AppProps) {
           content="Pathfinding Visualizer built with Next.js, Typescript, & TailwindCSS"
         />
       </Head>
-      <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
-        <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-          <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
-            <MazeContext.Provider value={{ maze, setMaze }}>
-              <SpeedContext.Provider value={{ speed, setSpeed }}>
-                <StartTileContext.Provider value={{ startTile, setStartTile }}>
-                  <EndTileContext.Provider value={{ endTile, setEndTile }}>
-                    <GridContext.Provider value={{ grid, setGrid }}>
-                      <Component {...pageProps} />
-                    </GridContext.Provider>
-                  </EndTileContext.Provider>
-                </StartTileContext.Provider>
-              </SpeedContext.Provider>
-            </MazeContext.Provider>
-          </AlgorithmContext.Provider>
-        </ThemeContext.Provider>
-      </VisualizedContext.Provider>
+      <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+        <VisualizedContext.Provider value={{ isGraphVisualized, setIsGraphVisualized }}>
+          <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+            <AlgorithmContext.Provider value={{ algorithm, setAlgorithm }}>
+              <MazeContext.Provider value={{ maze, setMaze }}>
+                <SpeedContext.Provider value={{ speed, setSpeed }}>
+                  <StartTileContext.Provider value={{ startTile, setStartTile }}>
+                    <EndTileContext.Provider value={{ endTile, setEndTile }}>
+                      <GridContext.Provider value={{ grid, setGrid }}>
+                        <Component {...pageProps} />
+                      </GridContext.Provider>
+                    </EndTileContext.Provider>
+                  </StartTileContext.Provider>
+                </SpeedContext.Provider>
+              </MazeContext.Provider>
+            </AlgorithmContext.Provider>
+          </ThemeContext.Provider>
+        </VisualizedContext.Provider>
+      </AuthContext.Provider>
     </>
   );
 }
