@@ -15,8 +15,35 @@ I saw [Clement Mihailescu's](https://github.com/clementmihailescu/Pathfinding-Vi
 
 2. Navigate to the repo
 
-3. Run `yarn`
+3. This project enables users to create custom mazes and share them with URLs. If you want this functionality move onto step 4. If you're not interested in implementing these features run the following command and then skip to step 7:
 
-4. Run `yarn dev`
+```
+git reset --hard b8a9cc3
+```
 
-5. Open a new browser window `http://localhost:3000`
+4. Create a new Github OAuth application on Github
+
+5. Create a new supabase project, enable Github OAuth, create a table `mazes` with the following columns:
+
+```
+id (int8) (primary key)
+created_at (timestamptz)
+name (text)
+grid (text[])
+created_by (foreign key on user id)
+```
+
+6. Create a `.env.local` file at the root of this repo and fill in the following variables:
+
+```
+NEXT_PUBLIC_DEV_URL=
+NEXT_PUBLIC_PROD_URL=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+```
+
+7. Run `yarn`
+
+8. Run `yarn dev`
+
+9. Open a new browser window `http://localhost:3000`

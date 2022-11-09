@@ -37,6 +37,11 @@ interface isGraphVisualizedContextInterface {
   setIsGraphVisualized: (isGraphVisualized: boolean) => void;
 }
 
+interface isAuthenticatedContextInterface {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
 export const AlgorithmContext = createContext({} as AlgorithmContextInterface);
 
 export const MazeContext = createContext({} as MazeContextInterface);
@@ -50,3 +55,5 @@ export const EndTileContext = createContext({} as EndTileContextInterface);
 export const GridContext = createContext({} as GridContextInterface);
 
 export const VisualizedContext = createContext({} as isGraphVisualizedContextInterface);
+
+export const AuthContext = createContext({} as isAuthenticatedContextInterface);

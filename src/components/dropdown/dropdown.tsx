@@ -2,8 +2,8 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-import { ALGORITHMS, MAZES, SPEEDS } from '../../lib/constants';
 import { DropDownTypes } from '../../lib/types';
+import { ALGORITHMS, MAZES, SPEEDS } from '../../lib/constants';
 
 interface Props {
   options: any;
@@ -24,13 +24,17 @@ export function DropDown(props: Props) {
     <Menu as="div" className={`relative inline-block text-left`}>
       <div>
         <Menu.Button
-          className={` ${
-            isAlgo ? ' min-w-[192px] ' : isMaze ? ' min-w-[175px] ' : ' min-w-[110px] '
+          className={` flex justify-between  ${
+            isAlgo
+              ? ' max-w-[192px] min-w-[192px] '
+              : isMaze
+              ? ' lg:min-w-[175px] lg:max-w-[175px] min-w-[192px] max-w-[192px] '
+              : ' max-w-[192px] min-w-[192px] '
           } bg-system-grey2 dark:bg-system-grey6 text-gray-700 dark:text-system-grey2 ${
             disabled
               ? 'cursor-default	pointer-events-none text-gray-400 dark:text-system-grey5'
               : ''
-          } inline-flex w-full justify-center rounded-md  px-4 py-2 text-sm font-medium  hover:bg-system-grey3 dark:hover:bg-system-grey5 focus:outline-none `}
+          } inline-flex w-full justify-center rounded-md  px-4 py-2 text-sm font-medium  hover:bg-system-grey3 dark:hover:bg-system-grey5 focus:outline-none font-normal `}
         >
           {isAlgo
             ? ALGORITHMS.find((algo) => algo.value === selected)?.name
