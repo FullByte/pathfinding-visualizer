@@ -4,7 +4,14 @@ import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { DropDown } from '../dropdown';
 import { ThemeToggle } from '../toggle';
 import { animatePath } from '../../lib/helpers';
-import { InfoModal, Logo, VisualizerToggle, UserMazes } from '.';
+import {
+  InfoModal,
+  Logo,
+  VisualizerToggle,
+  UserMazes,
+  InfoAndTheme,
+  CreateMaze,
+} from '.';
 import {
   cleanGrid,
   refreshGrid,
@@ -49,7 +56,6 @@ export function Nav(props: Props) {
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
   const mainStyle = `flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-0`;
-  const iconStyle = `h-6 w-6 dark:text-system-grey3 text-system-grey3 dark:hover:text-system-grey4 hover:text-system-grey4 cursor-pointer`;
 
   const handleClose = () => {
     setModalOpen(false);
@@ -105,21 +111,21 @@ export function Nav(props: Props) {
       <div className="flex items-center sm:justify-between w-247.5 ">
         <Logo />
         <div className="lg:w-[85%] w-[100%] flex items-center lg:justify-between lg:flex-row flex-col lg:space-y-0 space-y-3 lg:py-0 py-4">
-          {!disabled ? (
-            <div className="flex items-center justify-center">
-              <div className="pr-3">
-                <BsFillQuestionCircleFill
-                  onClick={() => setModalOpen(true)}
-                  className={iconStyle}
-                />
-              </div>
-              <ThemeToggle curRef={curRef} />
-            </div>
-          ) : (
-            <div className="w-11" />
-          )}
+          <div className="lg:flex flex-col items-start lg:justify-between justify-center hidden">
+            <InfoAndTheme
+              disabled={disabled}
+              screenSize={'large'}
+              setModalOpen={setModalOpen}
+              curRef={curRef}
+            />
+            <CreateMaze screenSize="large" disabled={disabled} />
+          </div>
           <div className="flex flex-col items-start lg:justify-between justify-center lg:py-3  lg:space-y-2 space-y-3">
             <UserMazes disabled={disabled} />
+            <div className="lg:hidden flex">
+              <CreateMaze screenSize="small" disabled={disabled} />
+            </div>
+
             <DropDown
               disabled={disabled}
               options={MAZES}
@@ -144,11 +150,21 @@ export function Nav(props: Props) {
               type={DropDownTypes.SPEED}
             />
           </div>
-          <VisualizerToggle
-            disabled={disabled}
-            isGraphVisualized={isGraphVisualized}
-            handleRunVizualizer={handleRunVizualizer}
-          />
+          <div className="flex justify-between items-center lg:max-w-12 lg:min-w-0 max-w-[192px] min-w-[192px]">
+            <div className="lg:hidden flex pr-2">
+              <InfoAndTheme
+                disabled={disabled}
+                screenSize={'small'}
+                setModalOpen={setModalOpen}
+                curRef={curRef}
+              />
+            </div>
+            <VisualizerToggle
+              disabled={disabled}
+              isGraphVisualized={isGraphVisualized}
+              handleRunVizualizer={handleRunVizualizer}
+            />
+          </div>
         </div>
       </div>
       <InfoModal modalOpen={modalOpen} handleClose={handleClose} />
