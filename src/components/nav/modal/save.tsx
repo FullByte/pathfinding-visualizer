@@ -161,7 +161,7 @@ export function SaveMazeModal(props: Props) {
               }`}
             >
               <div className="flex items-center justify-center">
-                <p className="pr-2 truncate">
+                <p className="pr-2">
                   https://pathfinding-visualizer-nu.vercel.app/?maze={createdMaze}
                 </p>{' '}
                 <FiCopy />
