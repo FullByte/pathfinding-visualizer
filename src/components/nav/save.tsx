@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { Popup } from '../popup';
+import { SaveMazeModal } from './modal';
 import { AuthContext, GridContext } from '../../hooks';
 
 interface Props {
@@ -11,9 +12,14 @@ interface Props {
 
 export function SaveMaze(props: Props) {
   const { disabled, screenSize, signInLoading } = props;
-  const { isAuthenticated } = useContext(AuthContext);
-  const [popup, setPopup] = useState<boolean>(false);
   const { grid } = useContext(GridContext);
+  const [popup, setPopup] = useState<boolean>(false);
+  const { isAuthenticated } = useContext(AuthContext);
+  const [mazeModalOpen, setMazeModalOpen] = useState<boolean>(false);
+
+  const handleModalClose = () => {
+    setMazeModalOpen(false);
+  };
 
   const checkIfNoWalls = () => {
     for (let i = 0; i < grid.length; i += 1) {
@@ -36,11 +42,7 @@ export function SaveMaze(props: Props) {
         }, 1500);
         return;
       }
-
-      console.log('has walls');
-
-      // if walls, open modal
-      // Modal will have a click if sure
+      setMazeModalOpen(true);
 
       // check if created 5 walls that day
       // If true toast saying you can't save more than 5 walls in day
@@ -69,6 +71,7 @@ export function SaveMaze(props: Props) {
         <></>
       )}
       <Popup popup={popup} variant={'error'} message={'A maze must contain walls'} />
+      <SaveMazeModal modalOpen={mazeModalOpen} handleClose={handleModalClose} />
     </>
   );
 }
