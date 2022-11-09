@@ -21,6 +21,7 @@ export function SaveMazeModal(props: Props) {
   const [success, setSuccess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [createdMaze, setCreatedMaze] = useState<any>(null);
+  const prodUrl = process.env.NEXT_PUBLIC_PROD_URL;
 
   const classes = `${
     isDarkMode
@@ -114,7 +115,7 @@ export function SaveMazeModal(props: Props) {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/?maze=${createdMaze}`);
+    navigator.clipboard.writeText(`${prodUrl}?maze=${createdMaze}`);
   };
 
   useEffect(
@@ -159,7 +160,9 @@ export function SaveMazeModal(props: Props) {
               }`}
             >
               <div className="flex items-center justify-center">
-                <p className="pr-2">http://localhost:3000/?maze={createdMaze}</p>{' '}
+                <p className="pr-2">
+                  {prodUrl}?maze={createdMaze}
+                </p>{' '}
                 <FiCopy />
               </div>
             </button>
