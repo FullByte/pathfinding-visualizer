@@ -18,7 +18,7 @@ I saw [Clement Mihailescu's](https://github.com/clementmihailescu/Pathfinding-Vi
 3. This project enables users to create custom mazes and share them with URLs. If you want this functionality move onto step 4. If you're not interested in implementing these features run the following command and then skip to step 7:
 
 ```
-git reset --hard b8a9cc3ede26ebe307071adf2a1079af6040bcaa
+git reset --hard b8a9cc3
 ```
 
 4. Create a new Github OAuth application on Github

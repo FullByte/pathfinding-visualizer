@@ -17,6 +17,7 @@ export function SaveMazeModal(props: Props) {
   const { modalOpen, handleClose } = props;
   const [isDarkMode] = useTheme();
   const { grid } = useContext(GridContext);
+  const [err, setErr] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [createdMaze, setCreatedMaze] = useState<any>(null);
@@ -34,7 +35,7 @@ export function SaveMazeModal(props: Props) {
   const buttonClasses = ` min-h-[40px] ${
     isDarkMode
       ? 'bg-system-grey7 hover:text-system-grey1  active:text-primary-white text-system-grey2'
-      : 'bg-system-grey1 hover:bg-system-grey3 active:bg-system-grey4'
+      : 'bg-system-grey1 hover:bg-system-grey3 '
   } my-4 px-4 py-2 rounded-lg  shadow-md ring-none focus:outline-none`;
   const descriptionClass = `${
     isDarkMode ? 'text-system-grey4' : 'text-system-grey6'
@@ -57,20 +58,51 @@ export function SaveMazeModal(props: Props) {
 
   const handleSave = async () => {
     setLoading(true);
+
     const mazeToSave = createMazeToSave();
     const mazeName = generateRandomAdjectiveNounTriplet();
 
+    // Retrieving user from database
     const {
+      error: authError,
       data: { user },
     } = await supabase.auth.getUser();
+    if (authError) {
+      setLoading(false);
+      setErr('Oops! Something went wrong.');
+      return;
+    }
+
+    // Checking if user has created 5 mazes today
     if (user) {
-      const { data: d, error } = await supabase
+      const { data: userMazes, error: userMazesError } = await supabase
+        .from('mazes')
+        .select()
+        .eq('created_by', user.id);
+      if (userMazesError) {
+        setErr('Oops! Something went wrong.');
+        setLoading(false);
+        return;
+      }
+      if (userMazes) {
+        const mazesCreatedToday = userMazes.filter(
+          (maze) => new Date(maze.created_at).getDate() === new Date().getDate()
+        );
+        if (mazesCreatedToday.length >= 5) {
+          setErr('You have already created 5 mazes today.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Creating maze
+      const { data: d, error: createError } = await supabase
         .from('mazes')
         .insert({ grid: mazeToSave, created_by: user?.id, name: mazeName })
         .select();
-      if (error) {
+      if (createError || authError) {
         setLoading(false);
-        console.log('Error: ', error);
+        setErr('Oops! Something went wrong.');
         return;
       }
       if (d) {
@@ -88,6 +120,7 @@ export function SaveMazeModal(props: Props) {
   useEffect(
     () => () => {
       setTimeout(() => {
+        setErr('');
         setSuccess(false);
       }, 400);
     },
@@ -140,6 +173,11 @@ export function SaveMazeModal(props: Props) {
                 per day.
               </p>
             </div>
+            {err ? (
+              <p className="text-primary-red text-center text-sm">{err}</p>
+            ) : (
+              <div className="h-5" />
+            )}
             <button
               onClick={handleSave}
               autoFocus={false}
@@ -147,8 +185,8 @@ export function SaveMazeModal(props: Props) {
                 loading
                   ? isDarkMode
                     ? ' hover:bg-system-grey7 '
-                    : ' hover:bg-system-grey1'
-                  : 'hover:bg-system-grey5 active:bg-system-grey4'
+                    : ' hover:bg-system-grey1 active:bg-system-grey4'
+                  : 'hover:bg-system-grey5 '
               } min-w-[111px]`}
             >
               {loading ? <FillLoadingSpinner size="small" /> : <p>Save Maze</p>}

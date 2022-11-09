@@ -35,21 +35,22 @@ export function SaveMaze(props: Props) {
   };
 
   const handleSave = () => {
-    if (isAuthenticated) {
-      if (checkIfNoWalls()) {
-        setPopupMessage('A maze must contain walls');
-        setPopupVariant('error');
-        setPopup(true);
-        setTimeout(() => {
-          setPopup(false);
-        }, 1500);
-        return;
-      }
-      setMazeModalOpen(true);
-
-      // check if created 5 walls that day
-      // If true when click submit give error
+    if (!isAuthenticated) {
+      return;
     }
+    if (checkIfNoWalls()) {
+      setPopupMessage('A maze must contain walls');
+      setPopupVariant('error');
+      setPopup(true);
+      setTimeout(() => {
+        setPopup(false);
+      }, 1500);
+      return;
+    }
+    setMazeModalOpen(true);
+
+    // check if created 5 walls that day
+    // If true when click submit give error
   };
 
   const disabledTheme = `${
@@ -70,7 +71,7 @@ export function SaveMaze(props: Props) {
       ) : (
         <></>
       )}
-      <Popup popup={popup} variant={'error'} message={popupMessage} />
+      <Popup popup={popup} variant={popupVariant} message={popupMessage} />
       <SaveMazeModal modalOpen={mazeModalOpen} handleClose={handleModalClose} />
     </>
   );
