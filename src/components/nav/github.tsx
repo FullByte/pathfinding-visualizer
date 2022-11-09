@@ -26,8 +26,8 @@ export function GithubAuth(props: Props) {
   async function signInWithGitHub() {
     const url =
       process && process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000'
-        : 'https://pathfinding-visualizer-nu.vercel.app/';
+        ? process.env.NEXT_PUBLIC_DEV_URL
+        : process.env.NEXT_PUBLIC_PROD_URL;
     setSignInLoading(true);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
