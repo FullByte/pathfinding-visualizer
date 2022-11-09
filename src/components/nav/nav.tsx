@@ -1,17 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 import { DropDown } from '../dropdown';
-import { ThemeToggle } from '../toggle';
 import { animatePath } from '../../lib/helpers';
-import {
-  InfoModal,
-  Logo,
-  VisualizerToggle,
-  UserMazes,
-  InfoAndTheme,
-  CreateMaze,
-} from '.';
+import { InfoModal, Logo, VisualizerToggle, GithubAuth, InfoAndTheme, SaveMaze } from '.';
 import {
   cleanGrid,
   refreshGrid,
@@ -53,6 +44,8 @@ export function Nav(props: Props) {
   const { speed, setSpeed } = useContext(SpeedContext);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
+  const [signInLoading, setSignInLoading] = useState<boolean>(false);
+
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
 
   const mainStyle = `flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-0`;
@@ -118,12 +111,24 @@ export function Nav(props: Props) {
               setModalOpen={setModalOpen}
               curRef={curRef}
             />
-            <CreateMaze screenSize="large" disabled={disabled} />
+            <SaveMaze
+              screenSize="large"
+              disabled={disabled}
+              signInLoading={signInLoading}
+            />
           </div>
           <div className="flex flex-col items-start lg:justify-between justify-center lg:py-3  lg:space-y-2 space-y-3">
-            <UserMazes disabled={disabled} />
+            <GithubAuth
+              signInLoading={signInLoading}
+              setSignInLoading={setSignInLoading}
+              disabled={disabled}
+            />
             <div className="lg:hidden flex">
-              <CreateMaze screenSize="small" disabled={disabled} />
+              <SaveMaze
+                screenSize="small"
+                disabled={disabled}
+                signInLoading={signInLoading}
+              />
             </div>
 
             <DropDown
