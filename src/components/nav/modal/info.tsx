@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { FiX } from 'react-icons/fi';
 import { BsGithub } from 'react-icons/bs';
 
-import { Modal } from '../modal';
-import { useTheme } from '../../hooks';
+import { Modal } from '../../modal';
+import { useTheme } from '../../../hooks';
 
 interface Props {
   modalOpen: boolean;
