@@ -19,8 +19,9 @@ import {
 } from '../../lib/constants';
 import {
   useTheme,
-  MazeContext,
   GridContext,
+  AuthContext,
+  MazeContext,
   SpeedContext,
   EndTileContext,
   AlgorithmContext,
@@ -41,13 +42,12 @@ export function Nav(props: Props) {
   const { grid, setGrid } = useContext(GridContext);
   const { maze, setMaze } = useContext(MazeContext);
   const { startTile } = useContext(StartTileContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const { speed, setSpeed } = useContext(SpeedContext);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { algorithm, setAlgorithm } = useContext(AlgorithmContext);
   const [signInLoading, setSignInLoading] = useState<boolean>(false);
-
   const { isGraphVisualized, setIsGraphVisualized } = useContext(VisualizedContext);
-
   const mainStyle = `flex items-center justify-center min-h-16.5 border-b shadow-md dark:shadow-gray-600 sm:px-5 px-0`;
 
   const handleClose = () => {
@@ -117,7 +117,11 @@ export function Nav(props: Props) {
               signInLoading={signInLoading}
             />
           </div>
-          <div className="flex flex-col items-start lg:justify-between justify-center lg:py-3  lg:space-y-2 space-y-3">
+          <div
+            className={`flex flex-col items-start lg:justify-between justify-center lg:py-3  lg:space-y-2  ${
+              isAuthenticated && !signInLoading ? 'space-y-3' : 'space-y-2'
+            }`}
+          >
             <GithubAuth
               signInLoading={signInLoading}
               setSignInLoading={setSignInLoading}

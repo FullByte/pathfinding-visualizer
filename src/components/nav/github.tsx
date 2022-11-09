@@ -79,11 +79,11 @@ export function GithubAuth(props: Props) {
           <FillLoadingSpinner size="small" />
         </button>
       ) : isAuthenticated ? (
-        <button onClick={signout} className={`${classes} justify-start`}>
+        <button onClick={signout} className={`${classes} justify-start `}>
           <p>Logout</p>
         </button>
       ) : (
-        <button onClick={signInWithGitHub} className={`${classes}  justify-center`}>
+        <button onClick={signInWithGitHub} className={`${classes} justify-center`}>
           <p className="pr-2">Login with Github</p> <FiGithub className="h-4 w-4" />{' '}
         </button>
       )}
