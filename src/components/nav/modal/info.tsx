@@ -73,6 +73,13 @@ export function InfoModal(props: Props) {
               Click the play button to see the pathfinding visualizer in action !
             </p>
           </div>
+          <div className="flex items-start justify-start py-2">
+            <p className={stepClasses}> Step 4: </p>
+            <p className={descriptionClass}>
+              Login with Github to create your own mazes and share its custom URL with
+              your friends !
+            </p>
+          </div>
         </div>
 
         <Link

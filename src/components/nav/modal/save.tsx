@@ -114,7 +114,9 @@ export function SaveMazeModal(props: Props) {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`https://pathfinding-visualizer-nu.vercel.app/?maze=${createdMaze}`);
+    navigator.clipboard.writeText(
+      `https://pathfinding-visualizer-nu.vercel.app/?maze=${createdMaze}`
+    );
   };
 
   useEffect(
@@ -147,8 +149,8 @@ export function SaveMazeModal(props: Props) {
             <div className={`${titleClasses} text-primary-green`}>Success</div>
             <div className="text-center flex flex-col items-start justify-start text-lg tracking-wide">
               <p className={descriptionClass}>
-                You're maze has been created successfully. Copy the link below to share
-                your maze with others 🎉
+                Your maze has been created successfully. Copy the link below to share your
+                maze with others 🎉
               </p>
             </div>
             <button
@@ -159,7 +161,7 @@ export function SaveMazeModal(props: Props) {
               }`}
             >
               <div className="flex items-center justify-center">
-                <p className="pr-2">
+                <p className="pr-2 truncate">
                   https://pathfinding-visualizer-nu.vercel.app/?maze={createdMaze}
                 </p>{' '}
                 <FiCopy />
